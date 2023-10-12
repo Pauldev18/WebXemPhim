@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Hiển thị dữ liệu từ API</title>
+  <style>
+    /* CSS cho hiển thị dữ liệu */
+    #phim-list {
+      list-style: none;
+    }
+
+    #phim-list li {
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      padding: 10px;
+    }
+  </style>
+</head>
+
+<body>
+<h1>Danh sách phim</h1>
+<ul id="phim-list"></ul>
+
+<script>
+  // JavaScript cho việc lấy dữ liệu từ API
+  const apiURL = 'http://localhost:8080/allphim'; // Thay thế URL_CUA_API bằng URL thực tế của API
+
+  fetch(apiURL)
+          .then(response => response.json())
+          .then(data => {
+            const phimList = document.getElementById('phim-list');
+
+            data.forEach(phim => {
+              const li = document.createElement('li');
+              li.innerHTML = `
+                        <h2>${phim.tenPhim}</h2>
+                        <img id="image" src="data:image/jpeg;base64, ${phim.anhPhim}" alt="Image">
+                        <p><strong>Thể loại:</strong> ${phim.theLoai}</p>
+                        <p><strong>Thời lượng:</strong> ${phim.thoiLuong}</p>
+                        <p><strong>Khởi chiếu:</strong> ${phim.khoiChieu}</p>
+                        <p><strong>Đạo diễn:</strong> ${phim.daoDien}</p>
+                        <p><strong>Diễn viên:</strong> ${phim.dienVien}</p>
+                        <p><strong>Ngôn ngữ:</strong> ${phim.ngonNgu}</p>
+                        <p><strong>Đánh giá:</strong> ${phim.danhGia}</p>
+                        <p><strong>Nội dung:</strong> ${phim.noiDung}</p>
+                    `;
+              phimList.appendChild(li);
+            });
+          })
+          .catch(error => console.error('Lỗi: ' + error));
+</script>
+</body>
+
+</html>

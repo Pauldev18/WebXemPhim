@@ -1,0 +1,33 @@
+package com.WebXemPhim.WebXemPhim.Entity;
+
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "loai_rap")
+public class LoaiRap {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_loai_rap")
+    private int id_loai_rap;
+
+    @Column(name = "loai_rap")
+    private String loai_rap;
+
+    // Thêm các trường dữ liệu và getter/setter cần thiết
+
+    public int getId_loai_rap() {
+        return id_loai_rap;
+    }
+
+    public void setId_loai_rap(int id_loai_rap) {
+        this.id_loai_rap = id_loai_rap;
+    }
+
+    public String getLoai_rap() {
+        return loai_rap;
+    }
+
+    public void setLoai_rap(String loai_rap) {
+        this.loai_rap = loai_rap;
+    }
+}
