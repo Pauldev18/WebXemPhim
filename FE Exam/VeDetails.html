@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+<ul id="ngay-list"></ul>
+<script>
+  const dataNgay = localStorage.getItem('dataNgay');
+  const IDPhim = localStorage.getItem('IDPhim');
+
+  if (dataNgay && IDPhim) {
+    const ngayList = document.getElementById('ngay-list');
+    const data = JSON.parse(dataNgay);
+
+    data.forEach(element => {
+      const thoiGian = new Date(element.thoiGian);
+      const ngay = thoiGian.getDate();
+      const thang = thoiGian.getMonth() + 1;
+      const nam = thoiGian.getFullYear();
+
+      const ngayItem = document.createElement('li');
+      ngayItem.textContent = `Ngày: ${ngay}, Tháng: ${thang}, Năm: ${nam}`;
+      ngayList.appendChild(ngayItem);
+    });
+  }
+</script>
+</body>
+
+</html>

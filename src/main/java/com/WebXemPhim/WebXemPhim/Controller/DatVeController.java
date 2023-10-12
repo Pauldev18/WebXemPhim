@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +16,7 @@ import javax.swing.event.ListDataListener;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-
+@CrossOrigin
 @RestController
 public class DatVeController {
 
@@ -62,6 +63,7 @@ public class DatVeController {
         List<NgayByIdPhim> ngays = allNgay.stream().map(ngay ->{
             NgayByIdPhim ngayByIdPhim = new NgayByIdPhim();
             ngayByIdPhim.setThoiGian(ngay.getNgayChieu().getNgayChieu());
+            ngayByIdPhim.setId(ngay.getNgayChieu().getId());
             return ngayByIdPhim;
         }).collect(Collectors.toList());
         return new ResponseEntity<>(ngays, HttpStatus.OK);

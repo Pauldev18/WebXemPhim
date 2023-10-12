@@ -38,9 +38,6 @@ public class DatVe {
     @JoinColumn(name = "id_cho_ngoi")
     private ChoNgoi choNgoi;
 
-    @ManyToOne
-    @JoinColumn(name = "id_gia_tien")
-    private GiaTien giaTien;
 
     // Getters và setters
 
@@ -57,7 +54,6 @@ public class DatVe {
         this.gioChieu = gioChieu;
         this.loaiRap = loaiRap;
         this.choNgoi = choNgoi;
-        this.giaTien = giaTien;
     }
 
 
@@ -123,13 +119,5 @@ public class DatVe {
 
     public void setChoNgoi(ChoNgoi choNgoi) {
         this.choNgoi = choNgoi;
-    }
-
-    public GiaTien getGiaTien() {
-        return giaTien;
-    }
-
-    public void setGiaTien(GiaTien giaTien) {
-        this.giaTien = giaTien;
     }
 }

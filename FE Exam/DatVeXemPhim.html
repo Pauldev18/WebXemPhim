@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Hiển thị dữ liệu từ API</title>
+    <style>
+        /* CSS cho hiển thị dữ liệu */
+        #phim-list {
+            list-style: none;
+        }
+
+        #phim-list li {
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+<h1>Danh sách phim</h1>
+<ul id="phim-list"></ul>
+
+<script>
+    // JavaScript cho việc lấy dữ liệu từ API
+    const apiURL = 'http://localhost:8080/allphim'; // Thay thế URL_CUA_API bằng URL thực tế của API
+    function showVe(id) {
+        localStorage.clear();
+        console.log(`Đã click vào phim có id: ` + id);
+
+        console.log("đã xóa hết dữ liệu ở localStorage");
+
+        const url = `http://localhost:8080/getThoiGianByIdPhim?IDPhim=${id}`;
+
+        fetch(url, {
+            method: 'GET',
+        })
+            .then(response => response.json())
+            .then(data => {
+                const dataNgay = JSON.stringify(data);
+                localStorage.setItem("dataNgay", dataNgay);
+                localStorage.setItem('IDPhim', id);
+
+                // Sau khi thiết lập localStorage, bạn có thể chuyển hướng đến trang khác.
+                window.location.href = 'VeDetails.html';
+            })
+            .catch(error => console.error('Lỗi: ' + error));
+    }
+
+
+
+    fetch(apiURL)
+        .then(response => response.json())
+        .then(data => {
+            const phimList = document.getElementById('phim-list');
+
+            data.forEach(phim => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                        <h2>${phim.tenPhim}</h2>
+                        <img id="image" src="data:image/jpeg;base64, ${phim.anhPhim}" alt="Image" onclick="showVe(${phim.id})">`;
+                phimList.appendChild(li);
+
+            });
+        })
+        .catch(error => console.error('Lỗi: ' + error));
+
+    //
+
+</script>
+</body>
+
+</html>
