@@ -2,6 +2,7 @@ package com.WebXemPhim.WebXemPhim.Controller;
 
 import com.WebXemPhim.WebXemPhim.DTO.*;
 import com.WebXemPhim.WebXemPhim.Entity.DatVe;
+import com.WebXemPhim.WebXemPhim.Entity.Tinh;
 import com.WebXemPhim.WebXemPhim.Repository.DatVeRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.swing.event.ListDataListener;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 @CrossOrigin
 @RestController
@@ -108,6 +110,12 @@ public class DatVeController {
                 }
         ).collect(Collectors.toList());
         return new ResponseEntity<>(slots, HttpStatus.OK);
+    }
+
+    @GetMapping("/test")
+    public ResponseEntity<List<Map<String, Object>>> getTinh(@RequestParam("idTinh") int idTinh, @RequestParam("idNgayChieu") int idNgayChieu) {
+        List<Map<String, Object>> result = datVeRepository.getTinh(idTinh, idNgayChieu);
+        return ResponseEntity.ok(result);
     }
 
 }
