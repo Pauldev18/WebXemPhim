@@ -13,9 +13,6 @@ public class DiaDiem {
     @Column(name = "dia_chi")
     private String dia_chi;
 
-    @ManyToOne
-    @JoinColumn(name = "id_tinh")
-    private Tinh tinh;
 
     // Thêm các trường dữ liệu và getter/setter cần thiết
 
@@ -35,11 +32,4 @@ public class DiaDiem {
         this.dia_chi = dia_chi;
     }
 
-    public Tinh getTinh() {
-        return tinh;
-    }
-
-    public void setTinh(Tinh tinh) {
-        this.tinh = tinh;
-    }
 }

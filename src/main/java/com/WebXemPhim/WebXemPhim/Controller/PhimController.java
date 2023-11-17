@@ -62,5 +62,12 @@ public class PhimController {
         }
     }
 
-
+    @GetMapping("/getPhimByID/{IdPhim}")
+    public Phim getFilmByID(@PathVariable int IdPhim){
+        return phimRepository.findById(IdPhim);
+    }
+    @GetMapping("/getPhimByName")
+    public List<Phim> getPhimByName(@RequestParam String name){
+        return phimRepository.finByName(name);
+    }
 }

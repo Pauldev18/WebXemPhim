@@ -12,4 +12,7 @@ public interface PhimRepository extends JpaRepository<Phim, Integer> {
     @Query(value = "SELECT * FROM phim WHERE id_phim = ?1", nativeQuery = true)
     List<Phim> findByTinhAndNgayChieu(int idTinh);
     List<Phim> findAll();
+    Phim findById(int ID);
+    @Query(value = "SELECT * FROM phim WHERE ten_phim = ?1", nativeQuery = true)
+    List<Phim> finByName(String name);
 }

@@ -3,11 +3,11 @@ package com.WebXemPhim.WebXemPhim.Entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="dat_ve")
+@Table(name="suat_chieu")
 public class DatVe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_dat_ve")
+    @Column(name = "id_suat_chieu")
     private Long id_dat_ve;
 
     @ManyToOne
@@ -40,22 +40,6 @@ public class DatVe {
 
 
     // Getters và setters
-
-
-    public DatVe() {
-    }
-
-    public DatVe(Long id_dat_ve, Phim phim, NgayChieu ngayChieu, Tinh tinh, DiaDiem diaDiem, GioChieu gioChieu, LoaiRap loaiRap, ChoNgoi choNgoi, GiaTien giaTien) {
-        this.id_dat_ve = id_dat_ve;
-        this.phim = phim;
-        this.ngayChieu = ngayChieu;
-        this.tinh = tinh;
-        this.diaDiem = diaDiem;
-        this.gioChieu = gioChieu;
-        this.loaiRap = loaiRap;
-        this.choNgoi = choNgoi;
-    }
-
 
     public Long getId_dat_ve() {
         return id_dat_ve;

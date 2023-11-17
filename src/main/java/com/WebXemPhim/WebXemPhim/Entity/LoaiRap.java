@@ -12,8 +12,18 @@ public class LoaiRap {
 
     @Column(name = "loai_rap")
     private String loai_rap;
+    @Column(name="gia_tien")
+    private Float giaTien;
+
 
     // Thêm các trường dữ liệu và getter/setter cần thiết
+    public Float getGiaTien() {
+        return giaTien;
+    }
+
+    public void setGiaTien(Float giaTien) {
+        this.giaTien = giaTien;
+    }
 
     public int getId_loai_rap() {
         return id_loai_rap;
