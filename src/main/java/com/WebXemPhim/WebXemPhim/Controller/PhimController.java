@@ -38,7 +38,8 @@ public class PhimController {
                                           @RequestParam("theLoai") String theLoai, @RequestParam("thoiLuong") String thoiLuong,
                                           @RequestParam("khoiChieu") String khoiChieu, @RequestParam("daoDien") String daoDien,
                                           @RequestParam("dienVien") String dienVien,  @RequestParam("ngonNgu") String ngonNgu,
-                                          @RequestParam("danhGia") String danhGia, @RequestParam("noiDung") String noiDung)
+                                          @RequestParam("danhGia") String danhGia, @RequestParam("noiDung") String noiDung,
+                                          @RequestParam("tinhTrang") int tinhTrang)
     {
         try {
             String generatedFileName = iStorageService.storeFile(file);
@@ -53,7 +54,7 @@ public class PhimController {
             newPhim.setNgonNgu(ngonNgu);
             newPhim.setDanhGia(danhGia);
             newPhim.setNoiDung(noiDung);
-
+            newPhim.setTinhTrang(tinhTrang);
             phimRepository.save(newPhim);
             return ResponseEntity.status(HttpStatus.OK).body("upload phim thanh cong");
         } catch (Exception e)
@@ -69,5 +70,9 @@ public class PhimController {
     @GetMapping("/getPhimByName")
     public List<Phim> getPhimByName(@RequestParam String name){
         return phimRepository.finByName(name);
+    }
+    @GetMapping("/getPhimByTinhTrang/{tinhTrang}")
+    public List<Phim> getPhimByTinhTrang(@PathVariable int tinhTrang){
+        return phimRepository.findByTinhTrang(tinhTrang);
     }
 }

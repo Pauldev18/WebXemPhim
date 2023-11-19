@@ -31,6 +31,9 @@ public class Phim {
     private String danhGia;
     @Column(name="noi_dung")
     private String noiDung;
+
+    @Column(name = "tinh_trang")
+    private int tinhTrang;
 //    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 //    @JoinTable(name = "Phim_NgayChieu",
 //            joinColumns = @JoinColumn(name = "IdPhim"),
@@ -41,7 +44,7 @@ public class Phim {
     public Phim() {
     }
 
-    public Phim(int id, String tenPhim, String anhPhim, String theLoai, String thoiLuong, String khoiChieu, String daoDien, String dienVien, String ngonNgu, String danhGia, String noiDung) {
+    public Phim(int id, String tenPhim, String anhPhim, String theLoai, String thoiLuong, String khoiChieu, String daoDien, String dienVien, String ngonNgu, String danhGia, String noiDung, int tinhTrang) {
         Id = id;
         this.tenPhim = tenPhim;
         this.anhPhim = anhPhim;
@@ -53,6 +56,7 @@ public class Phim {
         this.ngonNgu = ngonNgu;
         this.danhGia = danhGia;
         this.noiDung = noiDung;
+        this.tinhTrang = tinhTrang;
     }
 
     public int getId() {
@@ -141,5 +145,13 @@ public class Phim {
 
     public void setNoiDung(String noiDung) {
         this.noiDung = noiDung;
+    }
+
+    public int getTinhTrang() {
+        return tinhTrang;
+    }
+
+    public void setTinhTrang(int tinhTrang) {
+        this.tinhTrang = tinhTrang;
     }
 }
