@@ -70,19 +70,8 @@ public class DatVeController {
         }).collect(Collectors.toList());
         return new ResponseEntity<>(ngays, HttpStatus.OK);
     }
-    @GetMapping("rap")
-    public ResponseEntity<List<RapDTO>> getAllRap(
-            @RequestParam("IdPhim") int idPhim, @RequestParam("idNgayChieu") int idNgayChieu,
-            @RequestParam("idTinh") int idTinh, @RequestParam("idDiaDiem") int idDiaDiem){
-        List<DatVe> allRap = datVeRepository.findByRap(idPhim, idNgayChieu, idTinh, idDiaDiem);
-        List<RapDTO> raps = allRap.stream().map(rap ->{
-            RapDTO rapDTO = new RapDTO();
-            rapDTO.setTenRap(rap.getLoaiRap().getLoai_rap());
-            return rapDTO;
-        }).collect(Collectors.toList());
-        return new ResponseEntity<>(raps, HttpStatus.OK);
-    }
-    @GetMapping("giochieu")
+
+    @GetMapping("/giochieu")
     public ResponseEntity<List<GioChieuDTO>> getGioChieu(
             @RequestParam("IdPhim") int idPhim, @RequestParam("idNgayChieu") int idNgayChieu,
             @RequestParam("idTinh") int idTinh, @RequestParam("idDiaDiem") int idDiaDiem, @RequestParam("idLoaiRap") int idLoaiRap
@@ -95,7 +84,7 @@ public class DatVeController {
         }).collect(Collectors.toList());
         return new ResponseEntity<>(times, HttpStatus.OK);
     }
-    @GetMapping("chongoi")
+    @GetMapping("/chongoi")
     public ResponseEntity<List<ChoNgoiDTO>> getChoNgoi(
             @RequestParam("IdPhim") int idPhim, @RequestParam("idNgayChieu") int idNgayChieu,
             @RequestParam("idTinh") int idTinh, @RequestParam("idDiaDiem") int idDiaDiem,
@@ -112,10 +101,20 @@ public class DatVeController {
         return new ResponseEntity<>(slots, HttpStatus.OK);
     }
 
-    @GetMapping("/test")
-    public ResponseEntity<List<Map<String, Object>>> getTinh(@RequestParam("idTinh") int idTinh, @RequestParam("idNgayChieu") int idNgayChieu) {
-        List<Map<String, Object>> result = datVeRepository.getTinh(idTinh, idNgayChieu);
-        return ResponseEntity.ok(result);
+    @GetMapping("/getRapForSuatChieu")
+    public ResponseEntity<List<RapDTO>> getRap(@RequestParam("idPhim") int idPhim, @RequestParam("idNgayChieu") int idNgayChieu,
+                                               @RequestParam("idTinh") int idTinh)
+    {
+        List<DatVe> listIdRap = datVeRepository.getLoaiRap(idPhim, idNgayChieu, idTinh);
+        List<RapDTO> listTenRap = listIdRap.stream().map(
+                IDrap ->{
+                    RapDTO rapDTO = new RapDTO();
+                    rapDTO.setTenRap(IDrap.getLoaiRap().getLoai_rap());
+                    return rapDTO;
+                }
+        ).collect(Collectors.toList());
+        return new ResponseEntity<>(listTenRap, HttpStatus.OK);
     }
+
 
 }

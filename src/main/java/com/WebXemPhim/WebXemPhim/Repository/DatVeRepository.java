@@ -10,27 +10,31 @@ import java.util.Map;
 
 @Repository
 public interface DatVeRepository extends JpaRepository<DatVe, Integer> {
-    @Query(value = "SELECT * FROM dat_ve WHERE id_tinh = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM suat_chieu WHERE id_tinh = ?1", nativeQuery = true)
     List<DatVe> findByIdTinh(int id);
-    @Query(value = "SELECT * FROM dat_ve WHERE id_ngay_chieu = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM suat_chieu WHERE id_ngay_chieu = ?1", nativeQuery = true)
     List<DatVe> getTinhByNgay(int id);
-    @Query(value = "SELECT * FROM dat_ve WHERE id_ngay_chieu = ?1 AND id_phim = ?2", nativeQuery = true)
+    @Query(value = "SELECT * FROM suat_chieu WHERE id_ngay_chieu = ?1 AND id_phim = ?2", nativeQuery = true)
     List<DatVe> getDiaDiemByTinhAndPhim(int idNgayChieu, int idPhim);
-    @Query(value = "SELECT * FROM dat_ve WHERE id_phim = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM suat_chieu WHERE id_phim = ?1", nativeQuery = true)
     List<DatVe> findNgayByIdPhim(int id);
-    @Query(value = "SELECT * FROM dat_ve WHERE " +
+    @Query(value = "SELECT * FROM suat_chieu WHERE " +
             "id_phim = ?1 AND id_ngay_chieu = ?2 AND id_tinh = ?3 AND id_dia_diem = ?4", nativeQuery = true)
     List<DatVe> findByRap(int idPhim,int idNgayChieu, int idTinh, int idDiaDiem);
 
-    @Query(value = "SELECT * FROM dat_ve WHERE " +
+    @Query(value = "SELECT * FROM suat_chieu WHERE " +
             "id_phim = ?1 AND id_ngay_chieu = ?2 AND id_tinh = ?3 AND id_dia_diem = ?4 AND id_loai_rap = ?5", nativeQuery = true)
     List<DatVe> findByGioChieu(int idPhim,int idNgayChieu, int idTinh, int idDiaDiem, int idLoaiRap);
-    @Query(value = "SELECT * FROM dat_ve WHERE " +
+    @Query(value = "SELECT * FROM suat_chieu WHERE " +
             "id_phim = ?1 AND id_ngay_chieu = ?2 AND id_tinh = ?3 AND id_dia_diem = ?4 AND id_loai_rap = ?5 AND id_gio_chieu = ?6", nativeQuery = true)
     List<DatVe> findByChoNgoi(int idPhim,int idNgayChieu, int idTinh, int idDiaDiem, int idLoaiRap, int idGioChieu);
 
-    @Query(value = "SELECT t.tinh, p.ten_phim, nc.ngay_chieu FROM phim p, ngay_chieu nc, tinh t, phim_ngay_chieu pnc, ngay_chieu_tinh nct WHERE t.id_tinh = ?1 AND nc.id_ngay_chieu = ?2 and p.id_phim = pnc.id_phim and nc.id_ngay_chieu = pnc.id_ngay_chieu and nc.id_ngay_chieu = nct.id_ngay_chieu and t.id_tinh = nct.id_tinh", nativeQuery = true)
-    List<Map<String, Object>> getTinh(int idTinh, int idNgayChieu);
+   @Query(value = "select  * from suat_chieu where id_phim = ?1 and id_ngay_chieu = ?2 and id_tinh = ?3", nativeQuery = true)
+    List<DatVe> getLoaiRap(int idPhim, int idNgayChieu, int idTinh);
+
+   @Query(value = "select  * from suat_chieu where id_phim = ?1 and id_ngay_chieu = ?2 and id_tinh = ?3 " +
+           "and id_loai_rap = ?4", nativeQuery = true)
+    List<DatVe> getDiaDiemAndGioChieu(int idPhim, int idNgayChieu, int idTinh, int idLoaiRap);
 
 
 

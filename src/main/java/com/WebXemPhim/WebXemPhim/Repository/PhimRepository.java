@@ -13,7 +13,7 @@ public interface PhimRepository extends JpaRepository<Phim, Integer> {
     List<Phim> findByTinhAndNgayChieu(int idTinh);
     List<Phim> findAll();
     Phim findById(int ID);
-    @Query(value = "SELECT * FROM phim WHERE ten_phim = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM phim WHERE ten_phim LIKE %?1%", nativeQuery = true)
     List<Phim> finByName(String name);
     @Query(value = "select * FROM phim where tinh_trang = ?1", nativeQuery = true)
     List<Phim> findByTinhTrang(int tinhTrang);
