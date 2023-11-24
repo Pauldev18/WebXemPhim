@@ -90,16 +90,10 @@ public class PayController {
                                      @RequestParam("vnp_TxnRef") String transactionRef,
                                      @RequestParam("contractId") String contractId,
                                      @RequestParam("vnp_Amount") String amount) {
-
-        // Kiểm tra xác nhận thanh toán tại đây
-        // Bạn có thể thực hiện các kiểm tra khác tùy thuộc vào yêu cầu của ứng dụng của bạn
-        // Ví dụ: kiểm tra responseCode, kiểm tra transactionRef, kiểm tra amount, ...
-
-        // Nếu thanh toán thành công, trả về thông báo thành công
         if ("00".equals(responseCode)) {
-            return "Payment successful. TransactionRef: " + transactionRef + ", contractId: " + contractId + ", Amount: " + amount;
+            return "Thanh toán thành công. TransactionRef: " + transactionRef + ", contractId: " + contractId + ", Amount: " + amount;
         } else {
-            return "Payment failed. ResponseCode: " + responseCode;
+            return "Thanh toán thất bại. Code: " + responseCode;
         }
     }
 }
