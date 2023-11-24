@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.net.http.HttpClient;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -86,14 +88,15 @@ public class PayController {
         return paymentUrl;
     }
     @GetMapping("/checkPay")
-    public String checkPaymentStatus(@RequestParam("vnp_ResponseCode") String responseCode,
+    public RedirectView  checkPaymentStatus(@RequestParam("vnp_ResponseCode") String responseCode,
                                      @RequestParam("vnp_TxnRef") String transactionRef,
                                      @RequestParam("contractId") String contractId,
                                      @RequestParam("vnp_Amount") String amount) {
         if ("00".equals(responseCode)) {
-            return "Thanh toán thành công. TransactionRef: " + transactionRef + ", contractId: " + contractId + ", Amount: " + amount;
+            return new RedirectView("http://localhost:3000/checkSuccess");
         } else {
-            return "Thanh toán thất bại. Code: " + responseCode;
+            return new RedirectView("http://localhost:3000/checkFail");
         }
     }
+
 }
