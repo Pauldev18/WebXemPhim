@@ -4,8 +4,27 @@ import java.util.Date;
 import java.util.List;
 
 public class DiaDiemAndGioChieu {
+    private int idDiaDiem;
+
     private String diaDiem;
-    private List<GioChieuDTO> gioChieus;
+    private  List<GioChieuDTO> listGioChieu;
+
+    public DiaDiemAndGioChieu(int idDiaDiem, String diaDiem, List<GioChieuDTO> listGioChieu) {
+        this.idDiaDiem = idDiaDiem;
+        this.diaDiem = diaDiem;
+        this.listGioChieu = listGioChieu;
+    }
+
+    public DiaDiemAndGioChieu() {
+    }
+
+    public int getIdDiaDiem() {
+        return idDiaDiem;
+    }
+
+    public void setIdDiaDiem(int idDiaDiem) {
+        this.idDiaDiem = idDiaDiem;
+    }
 
     public String getDiaDiem() {
         return diaDiem;
@@ -15,11 +34,11 @@ public class DiaDiemAndGioChieu {
         this.diaDiem = diaDiem;
     }
 
-    public List<GioChieuDTO> getGioChieus() {
-        return gioChieus;
+    public List<GioChieuDTO> getListGioChieu() {
+        return listGioChieu;
     }
 
-    public void setGioChieus(List<GioChieuDTO> gioChieus) {
-        this.gioChieus = gioChieus;
+    public void setListGioChieu(List<GioChieuDTO> listGioChieu) {
+        this.listGioChieu = listGioChieu;
     }
 }

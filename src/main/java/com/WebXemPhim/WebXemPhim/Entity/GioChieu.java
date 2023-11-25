@@ -2,6 +2,7 @@ package com.WebXemPhim.WebXemPhim.Entity;
 
 import jakarta.persistence.*;
 
+import java.sql.Time;
 import java.util.Date;
 
 @Entity
@@ -13,7 +14,7 @@ public class GioChieu {
     private int id_gio_chieu;
 
     @Column(name = "gio_chieu")
-    private Date gio_chieu;
+    private Time gio_chieu;
 
     // Thêm các trường dữ liệu và getter/setter cần thiết
 
@@ -25,11 +26,11 @@ public class GioChieu {
         this.id_gio_chieu = id_gio_chieu;
     }
 
-    public Date getGio_chieu() {
+    public Time getGio_chieu() {
         return gio_chieu;
     }
 
-    public void setGio_chieu(Date gio_chieu) {
+    public void setGio_chieu(Time gio_chieu) {
         this.gio_chieu = gio_chieu;
     }
 }

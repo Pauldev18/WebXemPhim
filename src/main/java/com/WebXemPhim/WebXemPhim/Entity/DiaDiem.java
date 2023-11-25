@@ -8,7 +8,7 @@ public class DiaDiem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_dia_diem")
-    private Long id_dia_diem;
+    private int id_dia_diem;
 
     @Column(name = "dia_chi")
     private String dia_chi;
@@ -16,11 +16,11 @@ public class DiaDiem {
 
     // Thêm các trường dữ liệu và getter/setter cần thiết
 
-    public Long getId_dia_diem() {
+    public int getId_dia_diem() {
         return id_dia_diem;
     }
 
-    public void setId_dia_diem(Long id_dia_diem) {
+    public void setId_dia_diem(int id_dia_diem) {
         this.id_dia_diem = id_dia_diem;
     }
 
