@@ -4,6 +4,15 @@ public class ChoNgoiDTO {
     private int id;
 
     private String choNgoi;
+    private int trangThai;
+
+    public int getTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(int trangThai) {
+        this.trangThai = trangThai;
+    }
 
     public int getId() {
         return id;

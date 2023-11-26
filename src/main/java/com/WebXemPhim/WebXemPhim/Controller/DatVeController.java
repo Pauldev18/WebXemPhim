@@ -129,6 +129,27 @@ public class DatVeController {
 
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
+    @GetMapping("/getChoNgoi")
+    public ResponseEntity<List<ChoNgoiDTO>> getChoNgoi(@RequestParam("idPhim") int idPhim,
+                                                       @RequestParam("idNgayChieu") int idNgayChieu,
+                                                       @RequestParam("idTinh") int idTinh,
+                                                       @RequestParam("idRap") int idRap,
+                                                       @RequestParam("idDiaDiem") int idDiaDiem,
+                                                       @RequestParam("idGioChieu") int idGioChieu){
+        List<DatVe> IDChoNgoi = datVeRepository.getChoNgoi(idPhim, idNgayChieu, idTinh, idRap, idDiaDiem, idGioChieu);
+        Set<String> filterRapTrung = new HashSet<>();
+        List<ChoNgoiDTO> choNgoiDTOS = IDChoNgoi.stream().filter(cn -> filterRapTrung.add(cn.getChoNgoi().getCho_ngoi())).map(
+                choNgoi ->{
+                    ChoNgoiDTO choNgoiDTO = new ChoNgoiDTO();
+                    choNgoiDTO.setId(choNgoi.getChoNgoi().getId_cho_ngoi());
+                    choNgoiDTO.setChoNgoi(choNgoi.getChoNgoi().getCho_ngoi());
+                    choNgoiDTO.setTrangThai(choNgoi.getChoNgoi().getTrangThai());
+                    return choNgoiDTO;
+                }
+        ).collect(Collectors.toList());
+        return new ResponseEntity<>(choNgoiDTOS, HttpStatus.OK);
+
+    }
 
 
 
