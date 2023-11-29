@@ -15,7 +15,7 @@ public class MaVe {
     private String maSoVe;
     @Column(name = "trangthai")
     private int trangThai;
-    @Column(name = "createdAt")
+    @Column(name = "created_at")
     private Date createdAt;
 
     public MaVe() {

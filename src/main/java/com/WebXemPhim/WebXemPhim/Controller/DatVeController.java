@@ -170,7 +170,4 @@ public class DatVeController {
         return new ResponseEntity<>(datChoDTOS, HttpStatus.OK);
     }
 
-
-
-
 }

@@ -1,5 +1,6 @@
-package com.WebXemPhim.WebXemPhim.Service;
+package com.WebXemPhim.WebXemPhim.Service.Impl;
 
+import com.WebXemPhim.WebXemPhim.Service.IStorageService;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -17,7 +18,7 @@ import java.util.stream.Stream;
 
 
 @Service
-public class ImageStorageService implements IStorageService{
+public class ImageStorageService implements IStorageService {
     private final Path storageFolder = Paths.get("uploads");
     //constructor
     public ImageStorageService() {
