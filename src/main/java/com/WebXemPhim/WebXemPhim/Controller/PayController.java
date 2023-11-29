@@ -19,7 +19,8 @@ import java.util.*;
 public class PayController {
 
     @GetMapping("/pay")
-    public String getPay(@RequestParam("price") long price, @RequestParam("id") Integer contractId) throws UnsupportedEncodingException{
+    public String getPay(@RequestParam("price") long price, @RequestParam("idDatCho") Integer contractId,
+                         @RequestParam("IDUser") int idUser) throws UnsupportedEncodingException{
 
         String vnp_Version = "2.1.0";
         String vnp_Command = "pay";
@@ -45,7 +46,7 @@ public class PayController {
         vnp_Params.put("vnp_OrderType", orderType);
 
         vnp_Params.put("vnp_Locale", "vn");
-        vnp_Params.put("vnp_ReturnUrl", VNPayConfig.vnp_ReturnUrl+"?contractId="+contractId);
+        vnp_Params.put("vnp_ReturnUrl", VNPayConfig.vnp_ReturnUrl + "?contractId=" + contractId + "&idUser=" + idUser);
         vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
 
         Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
@@ -91,11 +92,11 @@ public class PayController {
     public RedirectView  checkPaymentStatus(@RequestParam("vnp_ResponseCode") String responseCode,
                                      @RequestParam("vnp_TxnRef") String transactionRef,
                                      @RequestParam("contractId") String contractId,
-                                     @RequestParam("vnp_Amount") String amount) {
+                                     @RequestParam("vnp_Amount") String amount, @RequestParam("idUser") int idUser) {
         if ("00".equals(responseCode)) {
-            return new RedirectView("http://localhost:3000/checkSuccess");
+            return new RedirectView("http://localhost:3000/checkSucess?idUser=" + idUser + "&IDDatCho=" + contractId + "&amount=" + amount);
         } else {
-            return new RedirectView("http://localhost:3000/checkFail");
+            return new RedirectView("http://localhost:3000/checkFail?idUser=" + idUser + "&IDDatCho=" + contractId + "&amount=" + amount);
         }
     }
 

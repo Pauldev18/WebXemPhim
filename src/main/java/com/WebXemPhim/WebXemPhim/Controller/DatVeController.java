@@ -144,12 +144,32 @@ public class DatVeController {
                     choNgoiDTO.setId(choNgoi.getChoNgoi().getId_cho_ngoi());
                     choNgoiDTO.setChoNgoi(choNgoi.getChoNgoi().getCho_ngoi());
                     choNgoiDTO.setTrangThai(choNgoi.getChoNgoi().getTrangThai());
+                    choNgoiDTO.setPrice(choNgoi.getLoaiRap().getGiaTien());
                     return choNgoiDTO;
                 }
         ).collect(Collectors.toList());
         return new ResponseEntity<>(choNgoiDTOS, HttpStatus.OK);
-
     }
+    @GetMapping("/IDDatCho")
+    public ResponseEntity<List<DatChoDTO>> getIDDatCho(@RequestParam("idPhim") int idPhim,
+                                                       @RequestParam("idNgayChieu") int idNgayChieu,
+                                                       @RequestParam("idTinh") int idTinh,
+                                                       @RequestParam("idRap") int idRap,
+                                                       @RequestParam("idDiaDiem") int idDiaDiem,
+                                                       @RequestParam("idGioChieu") int idGioChieu,
+                                                       @RequestParam("idChoNgoi") int idChoNgoi)
+    {
+        List<Integer> id = datVeRepository.getIDDatCho(idPhim, idNgayChieu, idTinh, idRap, idDiaDiem, idGioChieu, idChoNgoi);
+        Set<Integer> filterID = new HashSet<>();
+        List<DatChoDTO> datChoDTOS = id.stream().filter(dc -> filterID.add(dc))
+                .map(datChos -> {
+                    DatChoDTO choDTO = new DatChoDTO();
+                    choDTO.setIDDatCho(datChos);
+                    return choDTO;
+                }).collect(Collectors.toList());
+        return new ResponseEntity<>(datChoDTOS, HttpStatus.OK);
+    }
+
 
 
 

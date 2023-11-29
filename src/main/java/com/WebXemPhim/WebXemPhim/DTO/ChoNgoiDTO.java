@@ -5,6 +5,15 @@ public class ChoNgoiDTO {
 
     private String choNgoi;
     private int trangThai;
+    private Float price;
+
+    public Float getPrice() {
+        return price;
+    }
+
+    public void setPrice(Float price) {
+        this.price = price;
+    }
 
     public int getTrangThai() {
         return trangThai;

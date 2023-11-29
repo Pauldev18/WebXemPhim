@@ -104,4 +104,5 @@ public class DatVe {
     public void setChoNgoi(ChoNgoi choNgoi) {
         this.choNgoi = choNgoi;
     }
+
 }
