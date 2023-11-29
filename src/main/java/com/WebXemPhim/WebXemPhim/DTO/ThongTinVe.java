@@ -13,6 +13,16 @@ public class ThongTinVe {
     private String tenRap;
     private Byte maVe;
 
+    private String anhPhim;
+
+    public String getAnhPhim() {
+        return anhPhim;
+    }
+
+    public void setAnhPhim(String anhPhim) {
+        this.anhPhim = anhPhim;
+    }
+
     public Byte getMaVe() {
         return maVe;
     }

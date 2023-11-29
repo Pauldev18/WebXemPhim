@@ -72,6 +72,7 @@ public class SendMaVeController {
            thongTinVe.setTenGhe(lichSuDatVe.getMaVe().getDatVe().getChoNgoi().getCho_ngoi());
            thongTinVe.setTenRap(lichSuDatVe.getMaVe().getDatVe().getLoaiRap().getLoai_rap());
            thongTinVe.setMaVe(lichSuDatVe.getMaVe().getMaSoVe());
+           thongTinVe.setAnhPhim(lichSuDatVe.getMaVe().getDatVe().getPhim().getAnhPhim());
            return new ResponseEntity<>(thongTinVe, HttpStatus.OK);
        }
        else{
