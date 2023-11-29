@@ -12,20 +12,40 @@ public class MaVe {
     @Column(name = "id_ma_ve")
     private int idMaVe;
     @Column(name = "masove")
-    private String maSoVe;
+    private Byte maSoVe;
     @Column(name = "trangthai")
     private int trangThai;
     @Column(name = "created_at")
     private Date createdAt;
+    @ManyToOne
+    @JoinColumn(name = "id_suat_chieu")
+    private DatVe datVe;
 
     public MaVe() {
     }
 
-    public MaVe(int idMaVe, String maSoVe, int trangThai, Date createdAt) {
+    public MaVe(int idMaVe, Byte maSoVe, int trangThai, Date createdAt, DatVe datVe) {
         this.idMaVe = idMaVe;
         this.maSoVe = maSoVe;
         this.trangThai = trangThai;
         this.createdAt = createdAt;
+        this.datVe = datVe;
+    }
+
+    public void setMaSoVe(Byte maSoVe) {
+        this.maSoVe = maSoVe;
+    }
+
+    public Byte getMaSoVe() {
+        return maSoVe;
+    }
+
+    public DatVe getDatVe() {
+        return datVe;
+    }
+
+    public void setDatVe(DatVe datVe) {
+        this.datVe = datVe;
     }
 
     public int getIdMaVe() {
@@ -36,13 +56,7 @@ public class MaVe {
         this.idMaVe = idMaVe;
     }
 
-    public String getMaSoVe() {
-        return maSoVe;
-    }
 
-    public void setMaSoVe(String maSoVe) {
-        this.maSoVe = maSoVe;
-    }
 
     public int getTrangThai() {
         return trangThai;

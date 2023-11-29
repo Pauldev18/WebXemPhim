@@ -88,19 +88,19 @@ CREATE TABLE suat_chieu (
     FOREIGN KEY (id_loai_rap) REFERENCES loai_rap(id_loai_rap),
     FOREIGN KEY (id_cho_ngoi) REFERENCES cho_ngoi(id_cho_ngoi)
 );
-
 CREATE TABLE ma_ve (
     id_ma_ve INT AUTO_INCREMENT PRIMARY KEY,
-    masove longtext,
+    masove blob,
     trangthai int,
-    created_at datetime not null
+    created_at datetime not null,
+    id_suat_chieu int not null,
+    FOREIGN KEY (id_suat_chieu) REFERENCES suat_chieu(id_suat_chieu)
 );
 
 CREATE TABLE lich_su_dat_ve (
     id_lsdv INT AUTO_INCREMENT PRIMARY KEY,
-	id_suat_chieu INT NOT NULL,
-	FOREIGN KEY (id_suat_chieu) REFERENCES suat_chieu(id_suat_chieu),
     id_ma_ve INT NOT NULL,
+    ngay_mua date,
     FOREIGN KEY (id_ma_ve) REFERENCES ma_ve(id_ma_ve),
     id_user INT NOT NULL,
     FOREIGN KEY (id_user) REFERENCES users(id_user)

@@ -13,8 +13,8 @@ public class VeImpl implements VeService {
     private MaVeRepo maVeRepo;
     @Override
     @Transactional
-    public void updateTrangThaiVe(int idMaVe) {
-        MaVe ve = maVeRepo.findById(idMaVe);
+    public void updateTrangThaiVe(int idSuatChieu) {
+        MaVe ve = maVeRepo.getMaVe(idSuatChieu);
         ve.setTrangThai(0);
         maVeRepo.save(ve);
     }

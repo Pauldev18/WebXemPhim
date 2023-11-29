@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public interface MaVeRepo extends JpaRepository<MaVe, Integer> {
-    @Query(value = "SELECT * FROM ma_ve WHERE trangthai = 1 ORDER BY RAND() LIMIT 1", nativeQuery = true)
-    MaVe getRandomVe();
-    MaVe findById(int idMaVe);
+   @Query(value = "select * from ma_ve where id_suat_chieu = ?1 and trangthai = 1", nativeQuery = true)
+    MaVe getMaVe(int idSuatChieu);
 }
