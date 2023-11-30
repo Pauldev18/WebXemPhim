@@ -5,17 +5,15 @@ import com.WebXemPhim.WebXemPhim.Entity.*;
 import com.WebXemPhim.WebXemPhim.Repository.*;
 import com.WebXemPhim.WebXemPhim.Service.Impl.ChoNgoiImpl;
 import com.WebXemPhim.WebXemPhim.Service.Impl.VeImpl;
+import com.WebXemPhim.WebXemPhim.Service.QrCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
 
 @RestController
 public class SendMaVeController {
@@ -33,6 +31,8 @@ public class SendMaVeController {
     private ChoNgoiImpl choNgoi;
     @Autowired
     private VeImpl veImpl;
+    @Autowired
+    private QrCodeService qrCodeService;
     public SendMaVeController(ChoNgoiRepo choNgoiRepo, MaVeRepo maVeRepo, DatVeRepository datVeRepository, UserRepo userRepo, LichSuDatVerepo lichSuDatVerepo) {
         this.choNgoiRepo = choNgoiRepo;
         this.maVeRepo = maVeRepo;
@@ -83,5 +83,44 @@ public class SendMaVeController {
            return new ResponseEntity<>("Không tìm thấy vé", HttpStatus.NOT_FOUND);
        }
 
+    }
+
+    @PostMapping("/addMaVe")
+    public Object addVe(@RequestParam("idSuatChieu") int idSuatChieu)
+    {
+        String secretKey = "MaVe" + UUID.randomUUID();
+        byte[] qrCode = qrCodeService.generateQrCode(secretKey, 500, 500);
+        MaVe check = maVeRepo.getMaVe(idSuatChieu);
+        if(check == null){
+            MaVe newMaVe = new MaVe();
+            newMaVe.setMaSoVe(qrCode);
+            newMaVe.setTrangThai(1);
+            Date currentDate = Calendar.getInstance().getTime();
+            newMaVe.setCreatedAt(currentDate);
+            DatVe datVe = datVeRepository.getTTSuatChieu(idSuatChieu);
+            newMaVe.setDatVe(datVe);
+            maVeRepo.save(newMaVe);
+            return newMaVe;
+        }
+        else{
+            return "Mã vé với suất chiếu này đã tồn tại";
+        }
+
+    }
+    @GetMapping("/getMaVe/{maVeId}")
+    public ResponseEntity<Map<String, String>> getMaVe(@PathVariable int maVeId) {
+        Optional<MaVe> maVeOptional = maVeRepo.findById(maVeId);
+        if (maVeOptional.isPresent()) {
+            MaVe maVe = maVeOptional.get();
+            byte[] qrCode = maVe.getMaSoVe();
+            String base64QrCode = Base64.getEncoder().encodeToString(qrCode);
+
+            Map<String, String> response = new HashMap<>();
+            response.put("base64QrCode", base64QrCode);
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }

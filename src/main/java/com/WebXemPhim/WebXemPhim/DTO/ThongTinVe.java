@@ -11,7 +11,7 @@ public class ThongTinVe {
     private Date gioChieu;
     private String tenGhe;
     private String tenRap;
-    private Byte maVe;
+    private byte[] maVe;
 
     private String anhPhim;
 
@@ -23,11 +23,11 @@ public class ThongTinVe {
         this.anhPhim = anhPhim;
     }
 
-    public Byte getMaVe() {
+    public byte[] getMaVe() {
         return maVe;
     }
 
-    public void setMaVe(Byte maVe) {
+    public void setMaVe(byte[] maVe) {
         this.maVe = maVe;
     }
 

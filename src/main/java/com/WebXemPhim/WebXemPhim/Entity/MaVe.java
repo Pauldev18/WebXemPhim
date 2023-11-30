@@ -12,7 +12,7 @@ public class MaVe {
     @Column(name = "id_ma_ve")
     private int idMaVe;
     @Column(name = "masove")
-    private Byte maSoVe;
+    private byte[] maSoVe;
     @Column(name = "trangthai")
     private int trangThai;
     @Column(name = "created_at")
@@ -24,7 +24,7 @@ public class MaVe {
     public MaVe() {
     }
 
-    public MaVe(int idMaVe, Byte maSoVe, int trangThai, Date createdAt, DatVe datVe) {
+    public MaVe(int idMaVe, byte[] maSoVe, int trangThai, Date createdAt, DatVe datVe) {
         this.idMaVe = idMaVe;
         this.maSoVe = maSoVe;
         this.trangThai = trangThai;
@@ -32,11 +32,11 @@ public class MaVe {
         this.datVe = datVe;
     }
 
-    public void setMaSoVe(Byte maSoVe) {
+    public void setMaSoVe(byte[] maSoVe) {
         this.maSoVe = maSoVe;
     }
 
-    public Byte getMaSoVe() {
+    public byte[] getMaSoVe() {
         return maSoVe;
     }
 
