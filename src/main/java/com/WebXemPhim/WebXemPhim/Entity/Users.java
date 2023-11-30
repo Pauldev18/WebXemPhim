@@ -1,10 +1,11 @@
 package com.WebXemPhim.WebXemPhim.Entity;
 
-import jakarta.persistence.*;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_user")
@@ -18,10 +19,10 @@ public class User {
     @Column(name ="gmail")
     private String gmail;
 
-    public User() {
+    public Users() {
     }
 
-    public User(int idUser, String tenUser, String taiKhoan, String matKhau, String gmail) {
+    public Users(int idUser, String tenUser, String taiKhoan, String matKhau, String gmail) {
         this.idUser = idUser;
         this.tenUser = tenUser;
         this.taiKhoan = taiKhoan;

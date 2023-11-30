@@ -47,7 +47,7 @@ public class SendMaVeController {
        MaVe ve = maVeRepo.getMaVe(idSuatChieu);
        if(ve != null)
        {
-       User user = userRepo.findById(idUser);
+       Users user = userRepo.findById(idUser);
        if(user != null) {
            Date currentDate = Calendar.getInstance().getTime();
            LichSuDatVe lichSuDatVe = new LichSuDatVe();

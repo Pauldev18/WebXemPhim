@@ -1,6 +1,6 @@
 package com.WebXemPhim.WebXemPhim.Entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "loai_rap")

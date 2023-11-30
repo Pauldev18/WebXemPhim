@@ -1,9 +1,10 @@
 package com.WebXemPhim.WebXemPhim.Entity;
 
-import jakarta.persistence.*;
+
 
 import java.util.Date;
 
+import javax.persistence.*;
 @Entity
 @Table(name = "lich_su_dat_ve")
 public class LichSuDatVe {
@@ -16,17 +17,17 @@ public class LichSuDatVe {
     private MaVe maVe;
     @ManyToOne
     @JoinColumn(name = "id_user")
-    private User user;
+    private Users user;
     @Column(name = "ngay_mua")
     private Date ngayMua;
 
     public LichSuDatVe() {
     }
 
-    public LichSuDatVe(int idLSDV, MaVe maVe, User user, Date ngayMua) {
+    public LichSuDatVe(int idLSDV, MaVe maVe, Users users, Date ngayMua) {
         this.idLSDV = idLSDV;
         this.maVe = maVe;
-        this.user = user;
+        this.user = users;
         this.ngayMua = ngayMua;
     }
 
@@ -47,11 +48,11 @@ public class LichSuDatVe {
         this.maVe = maVe;
     }
 
-    public User getUser() {
+    public Users getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(Users user) {
         this.user = user;
     }
 

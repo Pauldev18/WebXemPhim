@@ -1,9 +1,7 @@
 package com.WebXemPhim.WebXemPhim.Entity;
 
-import jakarta.persistence.*;
-
+import javax.persistence.*;
 import java.sql.Time;
-import java.util.Date;
 
 @Entity
 @Table(name = "gio_chieu")

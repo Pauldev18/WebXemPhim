@@ -1,6 +1,8 @@
 package com.WebXemPhim.WebXemPhim.Entity;
 
-import jakarta.persistence.*;
+
+
+import javax.persistence.*;
 
 @Entity
 @Table(name="suat_chieu")

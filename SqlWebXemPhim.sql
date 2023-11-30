@@ -11,9 +11,10 @@ CREATE TABLE users (
     gmail VARCHAR(200)
 );
 
+
 CREATE TABLE roles (
     id_role INT AUTO_INCREMENT PRIMARY KEY,
-    TenRole VARCHAR(50)
+    ten_role VARCHAR(50)
 );
 
 CREATE TABLE users_roles (

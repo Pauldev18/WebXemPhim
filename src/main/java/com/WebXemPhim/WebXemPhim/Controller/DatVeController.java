@@ -6,7 +6,6 @@ import com.WebXemPhim.WebXemPhim.Entity.DiaDiem;
 import com.WebXemPhim.WebXemPhim.Entity.GioChieu;
 import com.WebXemPhim.WebXemPhim.Entity.Tinh;
 import com.WebXemPhim.WebXemPhim.Repository.DatVeRepository;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
