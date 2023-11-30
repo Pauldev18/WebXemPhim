@@ -7,11 +7,16 @@ import com.WebXemPhim.WebXemPhim.Service.Impl.ChoNgoiImpl;
 import com.WebXemPhim.WebXemPhim.Service.Impl.VeImpl;
 import com.WebXemPhim.WebXemPhim.Service.QrCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -33,6 +38,8 @@ public class SendMaVeController {
     private VeImpl veImpl;
     @Autowired
     private QrCodeService qrCodeService;
+    @Autowired
+    public JavaMailSender emailSender;
     public SendMaVeController(ChoNgoiRepo choNgoiRepo, MaVeRepo maVeRepo, DatVeRepository datVeRepository, UserRepo userRepo, LichSuDatVerepo lichSuDatVerepo) {
         this.choNgoiRepo = choNgoiRepo;
         this.maVeRepo = maVeRepo;
@@ -73,7 +80,32 @@ public class SendMaVeController {
            thongTinVe.setTenRap(lichSuDatVe.getMaVe().getDatVe().getLoaiRap().getLoai_rap());
            thongTinVe.setMaVe(lichSuDatVe.getMaVe().getMaSoVe());
            thongTinVe.setAnhPhim(lichSuDatVe.getMaVe().getDatVe().getPhim().getAnhPhim());
-           return new ResponseEntity<>(thongTinVe, HttpStatus.OK);
+           try {
+               // Create a MimeMessage.
+               MimeMessage message = emailSender.createMimeMessage();
+               MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+               // Set the recipient, subject, and text.
+               helper.setTo(user.getGmail());
+               helper.setSubject("Thông tin vé xem phim");
+               helper.setText(thongTinVe.toString());
+
+               // Attach the image
+               byte[] maVeBytes = ve.getMaSoVe();
+               if (maVeBytes != null && maVeBytes.length > 0) {
+                   String encodedImage = Base64.getEncoder().encodeToString(maVeBytes);
+                   helper.addAttachment("maVe.png", new ByteArrayResource(Base64.getDecoder().decode(encodedImage)));
+               }
+
+               // Send Message!
+               this.emailSender.send(message);
+
+               return new ResponseEntity<>(thongTinVe, HttpStatus.OK);
+           } catch (MessagingException e) {
+               e.printStackTrace();
+               return new ResponseEntity<>("Lỗi", HttpStatus.OK);
+           }
+
        }
        else{
            return new ResponseEntity<>("User không tồn tại", HttpStatus.NOT_FOUND);

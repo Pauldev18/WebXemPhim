@@ -1,6 +1,7 @@
 package com.WebXemPhim.WebXemPhim.DTO;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Date;
 
 public class ThongTinVe {
@@ -85,5 +86,18 @@ public class ThongTinVe {
 
     public void setTenRap(String tenRap) {
         this.tenRap = tenRap;
+    }
+
+    @Override
+    public String toString() {
+        return "THÔNG TIN VÉ:" + '\n' +
+                "Tên Phim: " + tenPhim + '\n' +
+                "Địa Điểm: " + diaDiem + '\n' +
+                "Ngày Chiếu: " + ngayChieu + '\n' +
+                "Giờ Chiếu: " + gioChieu + '\n' +
+                "Tên Ghế: " + tenGhe + '\n' +
+                "Tên Rạp: " + tenRap + '\n' +
+                "Ngày Mua: " + ngayMua + '\n' +
+                "Mã QR: " +'\n';
     }
 }
