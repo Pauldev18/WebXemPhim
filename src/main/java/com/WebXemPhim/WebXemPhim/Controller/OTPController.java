@@ -32,9 +32,8 @@ public class OTPController {
         Users checkUser = userRepo.findByGmail(email);
         if(checkUser != null)
         {
-            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            String username = auth.getName();
-            int otp = otpService.generateOTP(username);
+
+            int otp = otpService.generateOTP(checkUser.getTenUser());
 
             // Truyền nội dung template trực tiếp (ví dụ: "<p>Hi {{user}}, your OTP is {{otpnum}}</p>")
             EmailTemplate template = new EmailTemplate("<p>Hi {{user}}, your OTP is {{otpnum}}</p>");
@@ -54,19 +53,16 @@ public class OTPController {
     }
 
     @GetMapping("/validateOtp")
-    public ResponseEntity<String> validateOtp(@RequestParam("otpnum") int otpnum) {
-
+    public ResponseEntity<String> validateOtp(@RequestParam("otpnum") int otpnum, @RequestParam("email") String email) {
+        Users checkUser = userRepo.findByGmail(email);
         final String SUCCESS = "Success";
         final String FAIL = "Fail";
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
         // Validate the Otp
         if (otpnum >= 0) {
-
-            int serverOtp = otpService.getOtp(username);
+            int serverOtp = otpService.getOtp(checkUser.getTenUser());
             if (serverOtp > 0) {
                 if (otpnum == serverOtp) {
-                    otpService.clearOTP(username);
+                    otpService.clearOTP(checkUser.getTenUser());
 
                     return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
                 } else {
