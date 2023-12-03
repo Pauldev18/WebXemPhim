@@ -38,28 +38,22 @@ public class ImageStorageService implements IStorageService {
     public String storeFile(MultipartFile file) {
         try {
             if (file.isEmpty()) {
-                throw new RuntimeException("Failed to store empty file.");
+                throw new RuntimeException("Không thể lưu trữ tệp trống.");
             }
-            //check file is image ?
-            if(!isImageFile(file)) {
-                throw new RuntimeException("You can only upload image file");
-            }
-            float fileSizeInMegabytes = file.getSize() / 1_000_000.0f;
-            if(fileSizeInMegabytes > 1.0f) {
-                throw new RuntimeException("File must be <= 1Mb");
-            }
-            //File must be rename, why ?
-            // Read the file into a byte array
-            byte[] fileBytes = file.getBytes();
-            // Encode the byte array as a base64 string
-            String base64ImageData = Base64.getEncoder().encodeToString(fileBytes);
 
-            return base64ImageData;
-        }
-        catch (IOException exception) {
-            throw new RuntimeException("Failed to store file.", exception);
+            // Đọc nội dung tệp thành một mảng byte
+            byte[] fileBytes = file.getBytes();
+
+            // Mã hóa mảng byte thành một chuỗi base64
+            String base64FileData = Base64.getEncoder().encodeToString(fileBytes);
+
+            return base64FileData;
+        } catch (IOException exception) {
+            throw new RuntimeException("Không thể lưu trữ tệp.", exception);
         }
     }
+
+
 
     @Override
     public Stream<Path> loadAll() {

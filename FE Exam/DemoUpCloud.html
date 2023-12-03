@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .video-container {
+            max-width: 800px;
+            margin-top: 20px;
+        }
+    </style>
+    <title>Video Uploader</title>
+</head>
+
+<body>
+<form id="uploadForm" enctype="multipart/form-data">
+    <input type="file" id="fileInput" name="file" accept="*" />
+    <button type="button" onclick="uploadVideo()">Upload Video</button>
+</form>
+
+<div class="video-container">
+    <video id="videoPlayer" controls>
+        Your browser does not support the video tag.
+    </video>
+</div>
+
+<script>
+    async function uploadVideo() {
+        const fileInput = document.getElementById('fileInput');
+        const videoPlayer = document.getElementById('videoPlayer');
+        const uploadForm = document.getElementById('uploadForm');
+
+        const formData = new FormData(uploadForm);
+
+        try {
+            const response = await fetch('http://localhost:8080/upload', {
+                method: 'POST',
+                body: formData,
+            });
+
+            if (response.ok) {
+                const videoUrl = await response.text();
+
+                videoPlayer.src = videoUrl;
+
+                // Start playing the video automatically
+                videoPlayer.play().catch(error => console.error('Error playing video:', error));
+            } else {
+                console.error('Failed to upload video');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+</script>
+</body>
+
+</html>
