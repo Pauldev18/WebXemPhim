@@ -1,73 +1,20 @@
-package com.WebXemPhim.WebXemPhim.Entity;
+package com.WebXemPhim.WebXemPhim.DTO;
 
-import javax.persistence.*;
-
+import java.sql.Date;
 import java.sql.Time;
-import java.util.Date;
-import java.util.List;
 
-@Entity
-@Table(name="phim")
-public class Phim {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_phim")
-    private int Id;
-    @Column(name ="ten_phim")
+public class PhimDTO {
     private String tenPhim;
-    @Column(name= "anh_phim")
     private String anhPhim;
-    @Column(name = "the_loai")
     private String theLoai;
-    @Column(name = "thoi_luong")
     private Time thoiLuong;
-    @Column(name= "khoi_chieu")
     private Date khoiChieu;
-    @Column(name="dao_dien")
     private String daoDien;
-    @Column(name ="dien_vien")
     private String dienVien;
-    @Column(name="ngon_ngu")
     private String ngonNgu;
-    @Column(name="danh_gia")
     private String danhGia;
-    @Column(name="noi_dung")
     private String noiDung;
-
-    @Column(name = "tinh_trang")
     private int tinhTrang;
-//    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @JoinTable(name = "Phim_NgayChieu",
-//            joinColumns = @JoinColumn(name = "IdPhim"),
-//            inverseJoinColumns = @JoinColumn(name = "IdNgayChieu"))
-//    private List<NgayChieu> ngayChieuList;
-
-
-    public Phim() {
-    }
-
-    public Phim(int id, String tenPhim, String anhPhim, String theLoai, Time thoiLuong, Date khoiChieu, String daoDien, String dienVien, String ngonNgu, String danhGia, String noiDung, int tinhTrang) {
-        Id = id;
-        this.tenPhim = tenPhim;
-        this.anhPhim = anhPhim;
-        this.theLoai = theLoai;
-        this.thoiLuong = thoiLuong;
-        this.khoiChieu = khoiChieu;
-        this.daoDien = daoDien;
-        this.dienVien = dienVien;
-        this.ngonNgu = ngonNgu;
-        this.danhGia = danhGia;
-        this.noiDung = noiDung;
-        this.tinhTrang = tinhTrang;
-    }
-
-    public int getId() {
-        return Id;
-    }
-
-    public void setId(int id) {
-        Id = id;
-    }
 
     public String getTenPhim() {
         return tenPhim;

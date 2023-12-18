@@ -1,5 +1,6 @@
 package com.WebXemPhim.WebXemPhim.Controller;
 
+import com.WebXemPhim.WebXemPhim.DTO.PhimDTO;
 import com.WebXemPhim.WebXemPhim.Entity.Phim;
 import com.WebXemPhim.WebXemPhim.Repository.PhimRepository;
 import com.WebXemPhim.WebXemPhim.Service.IStorageService;
@@ -10,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.sql.Time;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 @CrossOrigin
@@ -33,12 +36,12 @@ public class PhimController {
     }
 
     @PostMapping("/upfilm")
-    public ResponseEntity<Object> upFilm(@RequestParam("tenPhim") String tenPhim,  @RequestParam("anhPhim") MultipartFile file,
-                                          @RequestParam("theLoai") String theLoai, @RequestParam("thoiLuong") String thoiLuong,
-                                          @RequestParam("khoiChieu") String khoiChieu, @RequestParam("daoDien") String daoDien,
-                                          @RequestParam("dienVien") String dienVien,  @RequestParam("ngonNgu") String ngonNgu,
-                                          @RequestParam("danhGia") String danhGia, @RequestParam("noiDung") String noiDung,
-                                          @RequestParam("tinhTrang") int tinhTrang)
+    public ResponseEntity<Object> upFilm(@RequestParam("tenPhim") String tenPhim, @RequestParam("anhPhim") MultipartFile file,
+                                         @RequestParam("theLoai") String theLoai, @RequestParam("thoiLuong") Time thoiLuong,
+                                         @RequestParam("khoiChieu") Date khoiChieu, @RequestParam("daoDien") String daoDien,
+                                         @RequestParam("dienVien") String dienVien, @RequestParam("ngonNgu") String ngonNgu,
+                                         @RequestParam("danhGia") String danhGia, @RequestParam("noiDung") String noiDung,
+                                         @RequestParam("tinhTrang") int tinhTrang)
     {
         try {
             String generatedFileName = iStorageService.storeFile(file);
@@ -61,13 +64,50 @@ public class PhimController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi");
         }
     }
+    @PutMapping("/editPhim/{IDPhim}")
+    public ResponseEntity<Object> editPhim(@RequestBody PhimDTO phimDTO, @PathVariable int IDPhim){
+        Phim editPhim = phimRepository.findById(IDPhim);
+       if(editPhim != null){
+           editPhim.setAnhPhim(phimDTO.getAnhPhim());
+           editPhim.setDanhGia(phimDTO.getDanhGia());
+           editPhim.setTinhTrang(phimDTO.getTinhTrang());
+           editPhim.setTenPhim(phimDTO.getTenPhim());
+           editPhim.setTheLoai(phimDTO.getTheLoai());
+           editPhim.setThoiLuong(phimDTO.getThoiLuong());
+           editPhim.setKhoiChieu(phimDTO.getKhoiChieu());
+           editPhim.setDienVien(phimDTO.getDienVien());
+           editPhim.setDaoDien(phimDTO.getDaoDien());
+           editPhim.setNgonNgu(phimDTO.getNgonNgu());
+           editPhim.setNoiDung(phimDTO.getNoiDung());
+           phimRepository.save(editPhim);
+           return new ResponseEntity<>(editPhim, HttpStatus.OK);
+       }else{
+           return new ResponseEntity<>("Không tìm thấy phim", HttpStatus.NOT_FOUND);
+       }
+
+    }
+    @DeleteMapping("/deletePhim/{IDPhim}")
+    public ResponseEntity<Object> deletePhim(@PathVariable int IDPhim){
+        try{
+            Phim deletePhim = phimRepository.findById(IDPhim);
+            if(deletePhim != null){
+                phimRepository.delete(deletePhim);
+                return new ResponseEntity<>("delete success", HttpStatus.OK);
+            }
+            else {
+                return new ResponseEntity<>("Không tìm thấy phim", HttpStatus.NOT_FOUND);
+            }
+        }catch(Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 
     @GetMapping("/getPhimByID/{IdPhim}")
     public Phim getFilmByID(@PathVariable int IdPhim){
         return phimRepository.findById(IdPhim);
     }
     @GetMapping("/getPhimByName")
-    public List<Phim> getPhimByName(@RequestParam String name){
+    public List<Phim> getPhimByName(@RequestParam("name") String name){
         return phimRepository.finByName(name);
     }
     @GetMapping("/getPhimByTinhTrang/{tinhTrang}")
