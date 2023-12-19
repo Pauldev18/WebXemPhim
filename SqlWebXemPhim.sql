@@ -116,6 +116,6 @@ create table hoadon(
    id_suat_chieu int not null,
    foreign key(id_suat_chieu) references suat_chieu(id_suat_chieu),
    total_price double not null,
-   createdAt datetime not null,
+   created_at datetime not null,
    trang_thai nvarchar(50) not null
 );
