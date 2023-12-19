@@ -13,7 +13,8 @@ public class OTPConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/*", "/*").permitAll() // Cho phép mọi người truy cập /generateOtp mà không cần xác thực
+                .antMatchers("/getNgayPhim/**", "/*").permitAll()
+                .antMatchers("/**/**", "/*").permitAll()// Cho phép mọi người truy cập /generateOtp mà không cần xác thực
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

@@ -7,8 +7,8 @@ public class PhimDTO {
     private String tenPhim;
     private String anhPhim;
     private String theLoai;
-    private Time thoiLuong;
-    private Date khoiChieu;
+    private String thoiLuong;
+    private String khoiChieu;
     private String daoDien;
     private String dienVien;
     private String ngonNgu;
@@ -40,19 +40,19 @@ public class PhimDTO {
         this.theLoai = theLoai;
     }
 
-    public Time getThoiLuong() {
+    public String getThoiLuong() {
         return thoiLuong;
     }
 
-    public void setThoiLuong(Time thoiLuong) {
+    public void setThoiLuong(String thoiLuong) {
         this.thoiLuong = thoiLuong;
     }
 
-    public Date getKhoiChieu() {
+    public String getKhoiChieu() {
         return khoiChieu;
     }
 
-    public void setKhoiChieu(Date khoiChieu) {
+    public void setKhoiChieu(String khoiChieu) {
         this.khoiChieu = khoiChieu;
     }
 

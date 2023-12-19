@@ -1,18 +1,14 @@
 package com.WebXemPhim.WebXemPhim.Controller;
 
 import com.WebXemPhim.WebXemPhim.DTO.*;
-import com.WebXemPhim.WebXemPhim.Entity.DatVe;
-import com.WebXemPhim.WebXemPhim.Entity.DiaDiem;
-import com.WebXemPhim.WebXemPhim.Entity.GioChieu;
-import com.WebXemPhim.WebXemPhim.Entity.Tinh;
-import com.WebXemPhim.WebXemPhim.Repository.DatVeRepository;
+import com.WebXemPhim.WebXemPhim.Entity.*;
+import com.WebXemPhim.WebXemPhim.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.persistence.EntityNotFoundException;
 import java.util.*;
 import java.util.stream.Collectors;
 @CrossOrigin
@@ -21,6 +17,20 @@ public class DatVeController {
 
     @Autowired
     private DatVeRepository datVeRepository;
+    @Autowired
+    private PhimRepository phimRepository;
+    @Autowired
+    private NgayChieuRepo ngayChieuRepo;
+    @Autowired
+    private TinhRepo tinhRepo;
+    @Autowired
+    private DiaDiemRepo diaDiemRepo;
+    @Autowired
+    private GioChieuRepo gioChieuRepo;
+    @Autowired
+    private LoaiRapRepo loaiRapRepo;
+    @Autowired
+    private ChoNgoiRepo choNgoiRepo;
     @GetMapping("/datve")
     public List<DatVe> getById(@RequestParam("id") int id)
     {
@@ -45,8 +55,8 @@ public class DatVeController {
 
         return new ResponseEntity<>(allDiaDiem, HttpStatus.OK);
     }
-    @GetMapping("/getNgayPhim")
-    public ResponseEntity<List<NgayByIdPhim>> getNgay(@RequestParam("IDPhim") int idPhim){
+    @GetMapping("/getNgayPhim/{idPhim}")
+    public ResponseEntity<List<NgayByIdPhim>> getNgay(@PathVariable int idPhim){
         List<DatVe> allNgay = datVeRepository.findNgayByIdPhim(idPhim);
         Set<Date> filterNgayTrung = new HashSet<>();
         List<NgayByIdPhim> ngays = allNgay.stream()
@@ -165,5 +175,56 @@ public class DatVeController {
                 }).collect(Collectors.toList());
         return new ResponseEntity<>(datChoDTOS, HttpStatus.OK);
     }
+
+    @PostMapping("/newListSuatChieu")
+    public ResponseEntity<Object> create(@RequestBody NewSuatChieu newSuatChieu) {
+        try {
+            // Check if entities with the provided IDs exist
+            Phim phim = phimRepository.findById(newSuatChieu.getIdPhim())
+                    .orElseThrow(() -> new EntityNotFoundException("Phim not found with id: " + newSuatChieu.getIdPhim()));
+
+            NgayChieu ngayChieu = ngayChieuRepo.findById(newSuatChieu.getIdNgayChieu())
+                    .orElseThrow(() -> new EntityNotFoundException("NgayChieu not found with id: " + newSuatChieu.getIdNgayChieu()));
+
+            Tinh tinh = tinhRepo.findById(newSuatChieu.getIdTinh())
+                    .orElseThrow(() -> new EntityNotFoundException("Tinh not found with id: " + newSuatChieu.getIdTinh()));
+
+            DiaDiem diaDiem = diaDiemRepo.findById(newSuatChieu.getIdDiaDiem())
+                    .orElseThrow(() -> new EntityNotFoundException("DiaDiem not found with id: " + newSuatChieu.getIdDiaDiem()));
+
+            GioChieu gioChieu = gioChieuRepo.findById(newSuatChieu.getIdGioChieu())
+                    .orElseThrow(() -> new EntityNotFoundException("GioChieu not found with id: " + newSuatChieu.getIdGioChieu()));
+
+            LoaiRap loaiRap = loaiRapRepo.findById(newSuatChieu.getIdLoaiRap())
+                    .orElseThrow(() -> new EntityNotFoundException("LoaiRap not found with id: " + newSuatChieu.getIdLoaiRap()));
+
+            List<Integer> idChoNgoiList = newSuatChieu.getIdChoNgoi();
+            List<ChoNgoi> listIDChoNgoi = choNgoiRepo.findAllByIds(idChoNgoiList);
+
+            // Check if all provided IDs exist
+            if (listIDChoNgoi.size() != idChoNgoiList.size()) {
+                return new ResponseEntity<>("ChoNgoi do not exist", HttpStatus.BAD_REQUEST);
+            }
+
+            // Create DatVe entities for each ChoNgoi
+            for (ChoNgoi choNgoi : listIDChoNgoi) {
+                DatVe newSC = new DatVe();
+                newSC.setPhim(phim);
+                newSC.setNgayChieu(ngayChieu);
+                newSC.setTinh(tinh);
+                newSC.setDiaDiem(diaDiem);
+                newSC.setGioChieu(gioChieu);
+                newSC.setLoaiRap(loaiRap);
+                newSC.setChoNgoi(choNgoi);
+                datVeRepository.save(newSC);
+            }
+            return new ResponseEntity<>("Success", HttpStatus.OK);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>("Entity not found: " + e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
 }

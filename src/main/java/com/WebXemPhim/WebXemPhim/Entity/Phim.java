@@ -20,9 +20,9 @@ public class Phim {
     @Column(name = "the_loai")
     private String theLoai;
     @Column(name = "thoi_luong")
-    private Time thoiLuong;
+    private String thoiLuong;
     @Column(name= "khoi_chieu")
-    private Date khoiChieu;
+    private String khoiChieu;
     @Column(name="dao_dien")
     private String daoDien;
     @Column(name ="dien_vien")
@@ -46,7 +46,7 @@ public class Phim {
     public Phim() {
     }
 
-    public Phim(int id, String tenPhim, String anhPhim, String theLoai, Time thoiLuong, Date khoiChieu, String daoDien, String dienVien, String ngonNgu, String danhGia, String noiDung, int tinhTrang) {
+    public Phim(int id, String tenPhim, String anhPhim, String theLoai, String thoiLuong, String khoiChieu, String daoDien, String dienVien, String ngonNgu, String danhGia, String noiDung, int tinhTrang) {
         Id = id;
         this.tenPhim = tenPhim;
         this.anhPhim = anhPhim;
@@ -93,19 +93,19 @@ public class Phim {
         this.theLoai = theLoai;
     }
 
-    public Time getThoiLuong() {
+    public String getThoiLuong() {
         return thoiLuong;
     }
 
-    public void setThoiLuong(Time thoiLuong) {
+    public void setThoiLuong(String thoiLuong) {
         this.thoiLuong = thoiLuong;
     }
 
-    public Date getKhoiChieu() {
+    public String getKhoiChieu() {
         return khoiChieu;
     }
 
-    public void setKhoiChieu(Date khoiChieu) {
+    public void setKhoiChieu(String khoiChieu) {
         this.khoiChieu = khoiChieu;
     }
 

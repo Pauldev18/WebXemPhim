@@ -1,4 +1,4 @@
-DROP database fstars_test;
+
 CREATE DATABASE IF NOT EXISTS FSTARS_test;
 
 USE FSTARS_test;
@@ -68,7 +68,7 @@ CREATE TABLE loai_rap (
 
 CREATE TABLE cho_ngoi (
     id_cho_ngoi INT AUTO_INCREMENT PRIMARY KEY,
-    cho_ngoi INT,
+    cho_ngoi nvarchar(200),
     trang_thai int
 );
 
@@ -89,6 +89,7 @@ CREATE TABLE suat_chieu (
     FOREIGN KEY (id_loai_rap) REFERENCES loai_rap(id_loai_rap),
     FOREIGN KEY (id_cho_ngoi) REFERENCES cho_ngoi(id_cho_ngoi)
 );
+
 CREATE TABLE ma_ve (
     id_ma_ve INT AUTO_INCREMENT PRIMARY KEY,
     masove blob,
@@ -106,6 +107,7 @@ CREATE TABLE lich_su_dat_ve (
     id_user INT NOT NULL,
     FOREIGN KEY (id_user) REFERENCES users(id_user)
 );
+
 create table hoadon(
    id_hoadon int auto_increment,
    primary key(id_hoadon),

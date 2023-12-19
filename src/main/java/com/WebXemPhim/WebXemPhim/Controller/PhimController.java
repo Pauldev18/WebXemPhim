@@ -26,10 +26,10 @@ public class PhimController {
     public PhimController(PhimRepository phimRepository) {
         this.phimRepository = phimRepository;
     }
-    @GetMapping("/phim")
-    public List<Phim> getAllPhim(@RequestParam("idTinh") int id) {
-        return phimRepository.findByTinhAndNgayChieu(id);
-    }
+//    @GetMapping("/phim")
+//    public List<Phim> getAllPhim(@RequestParam("idTinh") int id) {
+//        return phimRepository.findByTinhAndNgayChieu(id);
+//    }
     @GetMapping("/allphim")
     public List<Phim> getAll(){
         return phimRepository.findAll();
@@ -37,8 +37,8 @@ public class PhimController {
 
     @PostMapping("/upfilm")
     public ResponseEntity<Object> upFilm(@RequestParam("tenPhim") String tenPhim, @RequestParam("anhPhim") MultipartFile file,
-                                         @RequestParam("theLoai") String theLoai, @RequestParam("thoiLuong") Time thoiLuong,
-                                         @RequestParam("khoiChieu") Date khoiChieu, @RequestParam("daoDien") String daoDien,
+                                         @RequestParam("theLoai") String theLoai, @RequestParam("thoiLuong") String thoiLuong,
+                                         @RequestParam("khoiChieu") String khoiChieu, @RequestParam("daoDien") String daoDien,
                                          @RequestParam("dienVien") String dienVien, @RequestParam("ngonNgu") String ngonNgu,
                                          @RequestParam("danhGia") String danhGia, @RequestParam("noiDung") String noiDung,
                                          @RequestParam("tinhTrang") int tinhTrang)
@@ -66,7 +66,7 @@ public class PhimController {
     }
     @PutMapping("/editPhim/{IDPhim}")
     public ResponseEntity<Object> editPhim(@RequestBody PhimDTO phimDTO, @PathVariable int IDPhim){
-        Phim editPhim = phimRepository.findById(IDPhim);
+        Phim editPhim = phimRepository.findByIdPhim(IDPhim);
        if(editPhim != null){
            editPhim.setAnhPhim(phimDTO.getAnhPhim());
            editPhim.setDanhGia(phimDTO.getDanhGia());
@@ -89,7 +89,7 @@ public class PhimController {
     @DeleteMapping("/deletePhim/{IDPhim}")
     public ResponseEntity<Object> deletePhim(@PathVariable int IDPhim){
         try{
-            Phim deletePhim = phimRepository.findById(IDPhim);
+            Phim deletePhim = phimRepository.findByIdPhim(IDPhim);
             if(deletePhim != null){
                 phimRepository.delete(deletePhim);
                 return new ResponseEntity<>("delete success", HttpStatus.OK);
@@ -104,7 +104,7 @@ public class PhimController {
 
     @GetMapping("/getPhimByID/{IdPhim}")
     public Phim getFilmByID(@PathVariable int IdPhim){
-        return phimRepository.findById(IdPhim);
+        return phimRepository.findByIdPhim(IdPhim);
     }
     @GetMapping("/getPhimByName")
     public List<Phim> getPhimByName(@RequestParam("name") String name){
