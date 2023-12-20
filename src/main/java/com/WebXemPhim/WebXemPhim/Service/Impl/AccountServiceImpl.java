@@ -2,6 +2,7 @@ package com.WebXemPhim.WebXemPhim.Service.Impl;
 
 import com.WebXemPhim.WebXemPhim.DTO.AccountDTO;
 import com.WebXemPhim.WebXemPhim.DTO.Profile;
+import com.WebXemPhim.WebXemPhim.DTO.TTKhachHangDTO;
 import com.WebXemPhim.WebXemPhim.Entity.*;
 import com.WebXemPhim.WebXemPhim.Repository.*;
 import com.WebXemPhim.WebXemPhim.Service.AccountService;
@@ -14,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -144,5 +146,21 @@ public class AccountServiceImpl implements AccountService {
            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
        }
 
+    }
+
+    @Override
+    public List<TTKhachHangDTO> dskh() {
+        List<UserRole> userRoleList = UserRoleRepository.findAllKH();
+        List<TTKhachHangDTO> ttKhachHangDTOS = userRoleList.stream().map(ttkh ->{
+            TTKhachHangDTO ttKhachHangDTO = new TTKhachHangDTO();
+            ttKhachHangDTO.setName(ttkh.getUser().getTenUser());
+            ttKhachHangDTO.setAvatar(ttkh.getUser().getAvatar());
+            ttKhachHangDTO.setGmail(ttkh.getUser().getGmail());
+            ttKhachHangDTO.setSdt(ttkh.getUser().getSdt());
+            ttKhachHangDTO.setGioiTinh(ttkh.getUser().getGioiTinh());
+            ttKhachHangDTO.setNgaySinh(ttkh.getUser().getNgaySinh());
+            return ttKhachHangDTO;
+        }).collect(Collectors.toList());
+        return ttKhachHangDTOS;
     }
 }

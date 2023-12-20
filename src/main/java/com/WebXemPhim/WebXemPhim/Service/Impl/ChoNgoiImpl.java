@@ -14,8 +14,6 @@ public class ChoNgoiImpl implements ChoNgoiService {
     @Override
     @Transactional
     public void updateTrangThai(int idChoNgoi) {
-        ChoNgoi update = choNgoiRepo.findById(idChoNgoi);
-        update.setTrangThai(0);
-        choNgoiRepo.save(update);
+        choNgoiRepo.updateTrangThaiChoNgoi(idChoNgoi);
     }
 }

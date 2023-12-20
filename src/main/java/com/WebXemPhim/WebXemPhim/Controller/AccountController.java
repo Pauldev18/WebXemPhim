@@ -2,6 +2,7 @@ package com.WebXemPhim.WebXemPhim.Controller;
 
 import com.WebXemPhim.WebXemPhim.DTO.AccountDTO;
 import com.WebXemPhim.WebXemPhim.DTO.Login;
+import com.WebXemPhim.WebXemPhim.DTO.TTKhachHangDTO;
 import com.WebXemPhim.WebXemPhim.Entity.Users;
 import com.WebXemPhim.WebXemPhim.Service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
+import java.util.List;
 
 @RestController
 public class AccountController {
@@ -58,5 +60,9 @@ public class AccountController {
     @GetMapping("/profile/{IDUser}")
     public ResponseEntity<Object> profile(@PathVariable int IDUser){
         return accountService.profile(IDUser);
+    }
+    @GetMapping("/getAllKhachHang")
+    public List<TTKhachHangDTO> getAllTTKh(){
+        return accountService.dskh();
     }
 }
