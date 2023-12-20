@@ -1,12 +1,9 @@
 package com.WebXemPhim.WebXemPhim.Service.Impl;
 
 import com.WebXemPhim.WebXemPhim.DTO.AccountDTO;
-import com.WebXemPhim.WebXemPhim.Entity.Role;
-import com.WebXemPhim.WebXemPhim.Entity.UserRole;
-import com.WebXemPhim.WebXemPhim.Entity.Users;
-import com.WebXemPhim.WebXemPhim.Repository.RoleRepo;
-import com.WebXemPhim.WebXemPhim.Repository.UserRepo;
-import com.WebXemPhim.WebXemPhim.Repository.UserRoleRepository;
+import com.WebXemPhim.WebXemPhim.DTO.Profile;
+import com.WebXemPhim.WebXemPhim.Entity.*;
+import com.WebXemPhim.WebXemPhim.Repository.*;
 import com.WebXemPhim.WebXemPhim.Service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -23,17 +21,18 @@ public class AccountServiceImpl implements AccountService {
     private final UserRoleRepository UserRoleRepository;
     private final RoleRepo roleRepository;
     private final CloudinaryService cloudinaryService;
+    private final LichSuDatVerepo lichSuDatVerepo;
+    private final HoaDonRepo hoaDonRepo;
 
     @Autowired
-    public AccountServiceImpl(UserRepo userRepo, com.WebXemPhim.WebXemPhim.Repository.UserRoleRepository userRoleRepository, RoleRepo roleRepository, CloudinaryService cloudinaryService) {
+    public AccountServiceImpl(UserRepo userRepo, com.WebXemPhim.WebXemPhim.Repository.UserRoleRepository userRoleRepository, RoleRepo roleRepository, CloudinaryService cloudinaryService, LichSuDatVerepo lichSuDatVerepo, HoaDonRepo hoaDonRepo) {
         this.userRepo = userRepo;
         UserRoleRepository = userRoleRepository;
         this.roleRepository = roleRepository;
         this.cloudinaryService = cloudinaryService;
+        this.lichSuDatVerepo = lichSuDatVerepo;
+        this.hoaDonRepo = hoaDonRepo;
     }
-
-
-
 
     @Override
     public AccountDTO login(String username, String password) {
@@ -117,5 +116,33 @@ public class AccountServiceImpl implements AccountService {
             return new ResponseEntity<>("Success", HttpStatus.OK);
         }
         return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+    }
+
+    @Override
+    public ResponseEntity<Object> profile(int IDUser) {
+       try{
+           Users users = userRepo.findById(IDUser);
+           List<LichSuDatVe> lichSuDatVe = lichSuDatVerepo.findByIdUser(IDUser);
+           List<HoaDon> hoaDons = hoaDonRepo.findByIdUser(IDUser);
+           Profile profile = new Profile();
+           profile.setName(users.getTenUser());
+           profile.setAvatar(users.getAvatar());
+           //
+           Double totalPrice = 0.0;
+           for (HoaDon hoaDon : hoaDons) {
+               totalPrice += hoaDon.getTotalPrice();
+           }
+           profile.setTotalPrice(totalPrice);
+           profile.setTotalTicket(lichSuDatVe.size());
+           profile.setGioiTinh(users.getGioiTinh());
+           profile.setEmail(users.getGmail());
+           profile.setSdt(users.getSdt());
+           profile.setNgaySinh(users.getNgaySinh());
+           return new ResponseEntity<>(profile, HttpStatus.OK);
+       }catch (Exception e)
+       {
+           return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+       }
+
     }
 }

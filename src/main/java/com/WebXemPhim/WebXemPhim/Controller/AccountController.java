@@ -55,4 +55,8 @@ public class AccountController {
     public ResponseEntity<Object> forgotPass(@RequestParam("gmail") String gmail, @RequestParam("newPass") String newPass){
         return accountService.forgetPass(gmail, newPass);
     }
+    @GetMapping("/profile/{IDUser}")
+    public ResponseEntity<Object> profile(@PathVariable int IDUser){
+        return accountService.profile(IDUser);
+    }
 }
