@@ -4,6 +4,7 @@ import com.WebXemPhim.WebXemPhim.DTO.PhimDTO;
 import com.WebXemPhim.WebXemPhim.Entity.Phim;
 import com.WebXemPhim.WebXemPhim.Repository.PhimRepository;
 import com.WebXemPhim.WebXemPhim.Service.IStorageService;
+import com.WebXemPhim.WebXemPhim.Service.Impl.CloudinaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.sql.Time;
 import java.util.Date;
 import java.util.List;
@@ -22,7 +24,8 @@ public class PhimController {
     private PhimRepository phimRepository;
     @Autowired
     private IStorageService iStorageService;
-
+    @Autowired
+    private CloudinaryService cloudinaryService;
     public PhimController(PhimRepository phimRepository) {
         this.phimRepository = phimRepository;
     }
@@ -65,26 +68,65 @@ public class PhimController {
         }
     }
     @PutMapping("/editPhim/{IDPhim}")
-    public ResponseEntity<Object> editPhim(@RequestBody PhimDTO phimDTO, @PathVariable int IDPhim){
-        Phim editPhim = phimRepository.findByIdPhim(IDPhim);
-       if(editPhim != null){
-           editPhim.setAnhPhim(phimDTO.getAnhPhim());
-           editPhim.setDanhGia(phimDTO.getDanhGia());
-           editPhim.setTinhTrang(phimDTO.getTinhTrang());
-           editPhim.setTenPhim(phimDTO.getTenPhim());
-           editPhim.setTheLoai(phimDTO.getTheLoai());
-           editPhim.setThoiLuong(phimDTO.getThoiLuong());
-           editPhim.setKhoiChieu(phimDTO.getKhoiChieu());
-           editPhim.setDienVien(phimDTO.getDienVien());
-           editPhim.setDaoDien(phimDTO.getDaoDien());
-           editPhim.setNgonNgu(phimDTO.getNgonNgu());
-           editPhim.setNoiDung(phimDTO.getNoiDung());
-           phimRepository.save(editPhim);
-           return new ResponseEntity<>(editPhim, HttpStatus.OK);
-       }else{
-           return new ResponseEntity<>("Không tìm thấy phim", HttpStatus.NOT_FOUND);
-       }
-
+    public ResponseEntity<Object> editPhim( @RequestParam(value = "tenPhim", required = false) String tenPhim,
+                                            @RequestParam(value = "anhPhim", required = false) MultipartFile file,
+                                            @RequestParam(value = "theLoai", required = false) String theLoai,
+                                            @RequestParam(value = "thoiLuong", required = false) String thoiLuong,
+                                            @RequestParam(value = "khoiChieu", required = false) String khoiChieu,
+                                            @RequestParam(value = "daoDien", required = false) String daoDien,
+                                            @RequestParam(value = "dienVien", required = false) String dienVien,
+                                            @RequestParam(value = "ngonNgu", required = false) String ngonNgu,
+                                            @RequestParam(value = "danhGia", required = false) String danhGia,
+                                            @RequestParam(value = "noiDung", required = false) String noiDung,
+                                            @RequestParam(value = "tinhTrang", required = false) Integer tinhTrang,
+                                            @PathVariable int IDPhim){
+      try{
+          Phim editPhim = phimRepository.findByIdPhim(IDPhim);
+          if(editPhim != null){
+              if(file != null){
+                  editPhim.setAnhPhim(cloudinaryService.uploadImage(file));
+              }
+              if(danhGia != null)
+              {
+                  editPhim.setDanhGia(danhGia);
+              }
+              if(tinhTrang != null)
+              {
+                  editPhim.setTinhTrang(tinhTrang);
+              }
+              if(tenPhim != null){
+                  editPhim.setTenPhim(tenPhim);
+              }
+              if(theLoai != null){
+                  editPhim.setTheLoai(theLoai);
+              }
+              if(thoiLuong != null){
+                  editPhim.setThoiLuong(thoiLuong);
+              }
+              if(khoiChieu != null){
+                  editPhim.setKhoiChieu(khoiChieu);
+              }
+              if(dienVien != null){
+                  editPhim.setDienVien(dienVien);
+              }
+              if(daoDien != null){
+                  editPhim.setDaoDien(daoDien);
+              }
+              if(ngonNgu != null){
+                  editPhim.setNgonNgu(ngonNgu);
+              }
+              if(noiDung != null){
+                  editPhim.setNoiDung(noiDung);
+              }
+              phimRepository.save(editPhim);
+              return new ResponseEntity<>(editPhim, HttpStatus.OK);
+          }else{
+              return new ResponseEntity<>("Không tìm thấy phim", HttpStatus.NOT_FOUND);
+          }
+      }catch (IOException e)
+      {
+          return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+      }
     }
     @DeleteMapping("/deletePhim/{IDPhim}")
     public ResponseEntity<Object> deletePhim(@PathVariable int IDPhim){

@@ -18,10 +18,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-/**
- *
- * @author CTT VNPAY
- */
 @Configuration
 public class VNPayConfig {
 

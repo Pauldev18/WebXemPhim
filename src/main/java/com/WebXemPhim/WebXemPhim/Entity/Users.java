@@ -2,6 +2,8 @@ package com.WebXemPhim.WebXemPhim.Entity;
 
 
 import javax.persistence.*;
+import java.util.Date;
+
 
 @Entity
 @Table(name = "users")
@@ -12,6 +14,14 @@ public class Users {
     private int idUser;
     @Column(name = "ten_user")
     private String tenUser;
+    @Column(name = "avatar")
+    private String avatar;
+    @Column(name = "sdt")
+    private String sdt;
+    @Column(name = "gioi_tinh")
+    private int gioiTinh;
+    @Column(name = "ngay_sinh")
+    private Date ngaySinh;
     @Column(name = "tai_khoan")
     private String taiKhoan;
     @Column(name = "mat_khau")
@@ -22,9 +32,13 @@ public class Users {
     public Users() {
     }
 
-    public Users(int idUser, String tenUser, String taiKhoan, String matKhau, String gmail) {
+    public Users(int idUser, String tenUser, String avatar, String sdt, int gioiTinh, Date ngaySinh, String taiKhoan, String matKhau, String gmail) {
         this.idUser = idUser;
         this.tenUser = tenUser;
+        this.avatar = avatar;
+        this.sdt = sdt;
+        this.gioiTinh = gioiTinh;
+        this.ngaySinh = ngaySinh;
         this.taiKhoan = taiKhoan;
         this.matKhau = matKhau;
         this.gmail = gmail;
@@ -68,5 +82,37 @@ public class Users {
 
     public void setGmail(String gmail) {
         this.gmail = gmail;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getSdt() {
+        return sdt;
+    }
+
+    public void setSdt(String sdt) {
+        this.sdt = sdt;
+    }
+
+    public int getGioiTinh() {
+        return gioiTinh;
+    }
+
+    public void setGioiTinh(int gioiTinh) {
+        this.gioiTinh = gioiTinh;
+    }
+
+    public Date getNgaySinh() {
+        return ngaySinh;
+    }
+
+    public void setNgaySinh(Date ngaySinh) {
+        this.ngaySinh = ngaySinh;
     }
 }

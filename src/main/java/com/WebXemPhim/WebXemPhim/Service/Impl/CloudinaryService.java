@@ -1,7 +1,6 @@
-package com.WebXemPhim.WebXemPhim.Service;
+package com.WebXemPhim.WebXemPhim.Service.Impl;
 
 import com.cloudinary.Cloudinary;
-import com.cloudinary.Transformation;
 import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -12,7 +11,6 @@ import java.util.Map;
 
 @Service
 public class CloudinaryService {
-
     @Value("${cloudinary.cloud-name}")
     private String cloudName;
 
@@ -22,34 +20,17 @@ public class CloudinaryService {
     @Value("${cloudinary.api-secret}")
     private String apiSecret;
 
-    public String uploadVideo(MultipartFile file) throws IOException {
-        Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
-                "cloud_name", cloudName,
-                "api_key", apiKey,
-                "api_secret", apiSecret
-        ));
 
-        // Upload video lên Cloudinary
-        Map<?, ?> uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.asMap(
-                "resource_type", "video",
-                "format", "mp4"
-        ));
-
-        String videoUrl = (String) uploadResult.get("url");
-        return videoUrl;
-    }
     public String uploadImage(MultipartFile file) throws IOException {
         Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
                 "cloud_name", cloudName,
                 "api_key", apiKey,
                 "api_secret", apiSecret
         ));
-
-        // Upload video lên Cloudinary
+        // Upload image lên Cloudinary
         Map<?, ?> uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.asMap(
                 "resource_type", "image"
         ));
-
         String videoUrl = (String) uploadResult.get("url");
         return videoUrl;
     }

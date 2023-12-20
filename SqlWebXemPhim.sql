@@ -2,10 +2,13 @@
 CREATE DATABASE IF NOT EXISTS FSTARS_test;
 
 USE FSTARS_test;
-
 CREATE TABLE users (
     id_user INT AUTO_INCREMENT PRIMARY KEY,
     ten_user VARCHAR(200),
+    avatar nvarchar(255),
+    sdt nvarchar(25),
+    gioi_tinh bit,
+    ngay_sinh date,
     tai_khoan VARCHAR(200),
     mat_khau VARCHAR(200),
     gmail VARCHAR(200)
