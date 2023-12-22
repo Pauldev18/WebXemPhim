@@ -135,7 +135,7 @@ public class DatVeController {
 
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
-    @GetMapping("/getChoNgoi")
+    @PostMapping("/getChoNgoi")
     public ResponseEntity<List<ChoNgoiDTO>> getChoNgoi(@RequestParam("idPhim") int idPhim,
                                                        @RequestParam("idNgayChieu") int idNgayChieu,
                                                        @RequestParam("idTinh") int idTinh,
@@ -156,7 +156,7 @@ public class DatVeController {
         ).collect(Collectors.toList());
         return new ResponseEntity<>(choNgoiDTOS, HttpStatus.OK);
     }
-    @GetMapping("/IDDatCho")
+    @PostMapping("/IDDatCho")
     public ResponseEntity<List<DatChoDTO>> getIDDatCho(@RequestParam("idPhim") int idPhim,
                                                        @RequestParam("idNgayChieu") int idNgayChieu,
                                                        @RequestParam("idTinh") int idTinh,
@@ -198,13 +198,27 @@ public class DatVeController {
             LoaiRap loaiRap = loaiRapRepo.findById(newSuatChieu.getIdLoaiRap())
                     .orElseThrow(() -> new EntityNotFoundException("LoaiRap not found with id: " + newSuatChieu.getIdLoaiRap()));
 
-            List<Integer> idChoNgoiList = newSuatChieu.getIdChoNgoi();
-            List<ChoNgoi> listIDChoNgoi = choNgoiRepo.findAllByIds(idChoNgoiList);
-
-            // Check if all provided IDs exist
-            if (listIDChoNgoi.size() != idChoNgoiList.size()) {
-                return new ResponseEntity<>("ChoNgoi do not exist", HttpStatus.BAD_REQUEST);
+            List<DatVe> datVes = datVeRepository.getChoNgoi(newSuatChieu.getIdPhim(), newSuatChieu.getIdNgayChieu(), newSuatChieu.getIdTinh(),
+                    newSuatChieu.getIdLoaiRap(), newSuatChieu.getIdDiaDiem(), newSuatChieu.getIdGioChieu());
+            if(!datVes.isEmpty()){
+                return new ResponseEntity<>("Đã có suất chiếu này roi", HttpStatus.BAD_REQUEST);
             }
+
+            List<ChoNgoi> listIDChoNgoi = new ArrayList<>();
+            char row = 'A';
+            for (int i = 1; i <= 5; i++) {
+                for (int j = 1; j <= 10; j++) {
+                    String seatName = row + String.valueOf(j);
+                    ChoNgoi choNgoi = new ChoNgoi();
+                    choNgoi.setCho_ngoi(seatName);
+                    choNgoi.setTrangThai(0);
+                    choNgoiRepo.save(choNgoi);
+                    listIDChoNgoi.add(choNgoi);
+                }
+                row++;
+            }
+
+
 
             // Create DatVe entities for each ChoNgoi
             for (ChoNgoi choNgoi : listIDChoNgoi) {

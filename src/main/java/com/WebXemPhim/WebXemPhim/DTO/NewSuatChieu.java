@@ -9,7 +9,7 @@ public class NewSuatChieu {
     private int idDiaDiem;
     private int idGioChieu;
     private int idLoaiRap;
-    private List<Integer> idChoNgoi;
+
 
     public int getIdPhim() {
         return idPhim;
@@ -59,11 +59,5 @@ public class NewSuatChieu {
         this.idLoaiRap = idLoaiRap;
     }
 
-    public List<Integer> getIdChoNgoi() {
-        return idChoNgoi;
-    }
 
-    public void setIdChoNgoi(List<Integer> idChoNgoi) {
-        this.idChoNgoi = idChoNgoi;
-    }
 }

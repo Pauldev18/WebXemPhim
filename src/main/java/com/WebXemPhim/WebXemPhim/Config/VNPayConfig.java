@@ -23,7 +23,7 @@ public class VNPayConfig {
 
     public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
     public static String vnp_ReturnUrl = "http://localhost:8080/checkPay";
-    public static  String urlSuccess = "http://localhost:3000/checkSuccess";
+    public static  String urlSuccess = "http://127.0.0.1:5500/payment_confirmation.html";
     public static  String urlFail = "http://localhost:3000/checkFail";
     public static String vnp_TmnCode = "AKHWRJTK";
     public static String secretKey = "IGPCKQUTCTEZIPJNRGPCYDWSOFEYZVJE";

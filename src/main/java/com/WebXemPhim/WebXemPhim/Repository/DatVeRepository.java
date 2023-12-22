@@ -26,8 +26,8 @@ public interface DatVeRepository extends JpaRepository<DatVe, Integer> {
            "and id_loai_rap = ?4", nativeQuery = true)
     List<DatVe> getDiaDiemAndGioChieu(int idPhim, int idNgayChieu, int idTinh, int idLoaiRap);
 
-    @Query(value = "select DISTINCT * from suat_chieu where id_phim = ?1 and id_ngay_chieu = ?2 and id_tinh = ?3 " +
-            "and id_loai_rap = ?4 AND id_dia_diem = ?5 and id_gio_chieu = ?6", nativeQuery = true)
+    @Query(value = "select * from suat_chieu where id_phim = ?1 and id_ngay_chieu = ?2 and id_tinh = ?3 " +
+            "and id_loai_rap = ?4 and id_dia_diem = ?5 and id_gio_chieu = ?6", nativeQuery = true)
     List<DatVe> getChoNgoi(int idPhim, int idNgayChieu, int idTinh, int idLoaiRap, int idDiaDiem, int idGioChieu);
     @Query(value = "select DISTINCT * from suat_chieu where id_phim = ?1 and id_ngay_chieu = ?2 and id_tinh = ?3 " +
             "and id_loai_rap = ?4 AND id_dia_diem = ?5 and id_gio_chieu = ?6 and id_cho_ngoi = ?7", nativeQuery = true)
