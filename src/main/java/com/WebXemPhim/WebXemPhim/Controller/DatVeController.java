@@ -47,8 +47,8 @@ public class DatVeController {
         List<DiaDiemByTinhAndPhim> allDiaDiem = allVe.stream().filter(datVe -> uniqueDiaDiems.add(datVe.getDiaDiem().getDia_chi()))
                 .map(diaDiem -> {
                     DiaDiemByTinhAndPhim diaDiemDTO = new DiaDiemByTinhAndPhim();
-                    diaDiemDTO.setDiaDiem(diaDiem.getDiaDiem().getDia_chi());
-                    diaDiemDTO.setId(diaDiem.getDiaDiem().getId_dia_diem());
+                    diaDiemDTO.setDiaDiem(diaDiem.getTinh().getTenTinh());
+                    diaDiemDTO.setId(diaDiem.getTinh().getId());
                     return diaDiemDTO;
                 })
                 .collect(Collectors.toList());
