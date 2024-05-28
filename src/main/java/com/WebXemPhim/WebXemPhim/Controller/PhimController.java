@@ -43,11 +43,11 @@ public class PhimController {
                                          @RequestParam("theLoai") String theLoai, @RequestParam("thoiLuong") String thoiLuong,
                                          @RequestParam("khoiChieu") String khoiChieu, @RequestParam("daoDien") String daoDien,
                                          @RequestParam("dienVien") String dienVien, @RequestParam("ngonNgu") String ngonNgu,
-                                         @RequestParam("danhGia") String danhGia, @RequestParam("noiDung") String noiDung,
-                                         @RequestParam("tinhTrang") int tinhTrang)
+                                         @RequestParam("danhGia") String danhGia, @RequestParam("noiDung") String noiDung
+                                        ) throws IOException
     {
         try {
-            String generatedFileName = iStorageService.storeFile(file);
+            String generatedFileName = cloudinaryService.uploadImage(file);
             Phim newPhim = new Phim();
             newPhim.setTenPhim(tenPhim);
             newPhim.setAnhPhim(generatedFileName);
@@ -59,7 +59,7 @@ public class PhimController {
             newPhim.setNgonNgu(ngonNgu);
             newPhim.setDanhGia(danhGia);
             newPhim.setNoiDung(noiDung);
-            newPhim.setTinhTrang(tinhTrang);
+            newPhim.setTinhTrang(1);
             phimRepository.save(newPhim);
             return ResponseEntity.status(HttpStatus.OK).body("upload phim thanh cong");
         } catch (Exception e)
