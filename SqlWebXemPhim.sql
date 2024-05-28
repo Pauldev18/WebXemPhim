@@ -122,3 +122,58 @@ create table hoadon(
    created_at datetime not null,
    trang_thai nvarchar(50) not null
 );
+-- Inserting sample data into phim (movies)
+INSERT INTO phim (ten_phim, anh_phim, the_loai, thoi_luong, khoi_chieu, dao_dien, dien_vien, ngon_ngu, danh_gia, noi_dung, tinh_trang)
+VALUES 
+('Movie A', 'Image URL A', 'Action', '02:00:00', '2024-06-01 10:00:00', 'Director A', 'Actor A, Actor B', 'English', '5 stars', 'Content A', 1),
+('Movie B', 'Image URL B', 'Drama', '01:45:00', '2024-06-10 14:00:00', 'Director B', 'Actor C, Actor D', 'Vietnamese', '4 stars', 'Content B', 1);
+
+-- Inserting sample data into ngay_chieu (show dates)
+INSERT INTO ngay_chieu (ngay_chieu)
+VALUES 
+('2024-06-01 00:00:00'),
+('2024-06-02 00:00:00');
+
+-- Inserting sample data into tinh (provinces)
+INSERT INTO tinh (tinh)
+VALUES 
+('Hanoi'),
+('Ho Chi Minh City');
+
+-- Inserting sample data into dia_diem (locations)
+INSERT INTO dia_diem (dia_chi)
+VALUES 
+('Cinema A, Hanoi'),
+('Cinema B, Ho Chi Minh City');
+
+-- Inserting sample data into gio_chieu (show times)
+INSERT INTO gio_chieu (gio_chieu)
+VALUES 
+('10:00:00'),
+('14:00:00');
+
+-- Inserting sample data into loai_rap (theater types)
+INSERT INTO loai_rap (loai_rap, gia_tien)
+VALUES 
+('Standard', 100000),
+('VIP', 150000);
+
+-- Inserting sample data into cho_ngoi (seats)
+INSERT INTO cho_ngoi (cho_ngoi, trang_thai)
+VALUES 
+('A1', 0),
+('A2', 0),
+('B1', 0),
+('B2', 0);
+
+-- Inserting sample data into suat_chieu (showtimes)
+INSERT INTO suat_chieu (id_phim, id_ngay_chieu, id_tinh, id_dia_diem, id_gio_chieu, id_loai_rap, id_cho_ngoi)
+VALUES 
+(1, 1, 1, 1, 1, 1, 1),
+(1, 1, 1, 1, 2, 2, 2),
+(2, 2, 2, 2, 1, 1, 3),
+(2, 2, 2, 2, 2, 2, 4);
+
+INSERT INTO phim (ten_phim, anh_phim, the_loai, thoi_luong, khoi_chieu, dao_dien, dien_vien, ngon_ngu, danh_gia, noi_dung, tinh_trang) 
+VALUES ('Tên phim', 'URL ảnh phim', 'Thể loại', 'Thời lượng', 'Ngày khởi chiếu', 'Đạo diễn', 'Diễn viên', 'Ngôn ngữ', 'Đánh giá', 'Nội dung', 1);
+
