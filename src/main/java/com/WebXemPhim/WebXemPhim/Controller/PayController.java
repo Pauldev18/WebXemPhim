@@ -7,6 +7,8 @@ import com.WebXemPhim.WebXemPhim.Repository.*;
 import com.WebXemPhim.WebXemPhim.Service.ChoNgoiService;
 import com.WebXemPhim.WebXemPhim.Service.QrCodeService;
 import com.WebXemPhim.WebXemPhim.Service.VeService;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,8 +46,9 @@ public class PayController {
     @Autowired
     private VeService veService;
     @PostMapping("/pay")
-    public String getPay(@RequestParam("price") long price, @RequestParam("idDatCho") int IDDatCho,
+    public String  getPay(@RequestParam("price") long price, @RequestParam("idDatCho") int IDDatCho,
                          @RequestParam("IDUser") int idUser) throws UnsupportedEncodingException{
+        JSONObject response = new JSONObject();
         DatVe suatChieu = datVeRepository.getTTSuatChieu(IDDatCho);
         if(suatChieu.getChoNgoi().getTrangThai() == 0){
             String vnp_Version = "2.1.0";
@@ -112,9 +115,14 @@ public class PayController {
             queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
             String paymentUrl = VNPayConfig.vnp_PayUrl + "?" + queryUrl;
 
-            return paymentUrl;
+
+            JSONObject responseJson = new JSONObject();
+            responseJson.put("url", paymentUrl);
+            return responseJson.toString();
         }else{
-            return "Chỗ ngồi đã có người đặt";
+            JSONObject responseJson = new JSONObject();
+            responseJson.put("error", "Chỗ ngồi đã có người đặt");
+            return responseJson.toString();
         }
 
     }
@@ -161,9 +169,9 @@ public class PayController {
             thongTinVe.setMaVe(newMaVe.getMaSoVe());
             thongTinVe.setNgayMua(currentDate);
             redirectAttributes.addFlashAttribute("thongTinVe", thongTinVe);
-
             // Redirect to the success page
-            return new RedirectView(VNPayConfig.urlSuccess);
+            return new RedirectView("https://your-domain.com/your-path");
+
         } else {
             return new RedirectView(VNPayConfig.urlFail);
         }

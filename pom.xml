@@ -27,6 +27,12 @@
 			<version>1.29.0</version>
 		</dependency>
 		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20210307</version> <!-- Phiên bản có thể thay đổi -->
+		</dependency>
+
+		<dependency>
 			<groupId>net.coobird</groupId>
 			<artifactId>thumbnailator</artifactId>
 			<version>0.4.13</version> <!-- Use the latest version available -->
