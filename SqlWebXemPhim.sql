@@ -122,6 +122,7 @@ create table hoadon(
    created_at datetime not null,
    trang_thai nvarchar(50) not null
 );
+
 -- Inserting sample data into phim (movies)
 INSERT INTO phim (ten_phim, anh_phim, the_loai, thoi_luong, khoi_chieu, dao_dien, dien_vien, ngon_ngu, danh_gia, noi_dung, tinh_trang)
 VALUES 
@@ -176,4 +177,21 @@ VALUES
 
 INSERT INTO phim (ten_phim, anh_phim, the_loai, thoi_luong, khoi_chieu, dao_dien, dien_vien, ngon_ngu, danh_gia, noi_dung, tinh_trang) 
 VALUES ('Tên phim', 'URL ảnh phim', 'Thể loại', 'Thời lượng', 'Ngày khởi chiếu', 'Đạo diễn', 'Diễn viên', 'Ngôn ngữ', 'Đánh giá', 'Nội dung', 1);
+INSERT INTO users (ten_user, avatar, sdt, gioi_tinh, ngay_sinh, tai_khoan, mat_khau, gmail) VALUES
+('User One', 'avatar1.png', '1234567890', 1, '1990-01-01', 'user1', 'password1', 'user1@gmail.com'),
+('User Two', 'avatar2.png', '0987654321', 0, '1992-02-02', 'user2', 'password2', 'user2@gmail.com'),
+('User Three', 'avatar3.png', '1112223333', 1, '1994-03-03', 'user3', 'password3', 'user3@gmail.com'),
+('User Four', 'avatar4.png', '4445556666', 0, '1996-04-04', 'user4', 'password4', 'user4@gmail.com'),
+('User Five', 'avatar5.png', '7778889999', 1, '1998-05-05', 'user5', 'password5', 'user5@gmail.com');
 
+INSERT INTO roles (ten_role) VALUES
+('Admin'),
+('User');
+
+-- Assign Roles to Users
+INSERT INTO users_roles (id_user, id_role) VALUES
+(1, 1), -- User One as Admin
+(2, 2), -- User Two as User
+(3, 2), -- User Three as User
+(4, 1), -- User Four as Admin
+(5, 2); -- User Five as User
