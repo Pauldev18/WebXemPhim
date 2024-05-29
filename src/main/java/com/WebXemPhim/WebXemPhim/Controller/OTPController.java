@@ -33,8 +33,8 @@ public class OTPController {
 
             int otp = otpService.generateOTP(checkUser.getTenUser());
 
-            // Truyền nội dung template trực tiếp (ví dụ: "<p>Hi {{user}}, your OTP is {{otpnum}}</p>")
-            EmailTemplate template = new EmailTemplate("<p>Hi {{user}}, your OTP is {{otpnum}}</p>");
+
+            EmailTemplate template = new EmailTemplate("<p>Chào bạn {{user}}, mã OTP để lấy lại mật khẩu:{{otpnum}}</p>");
 
             Map<String, String> replacements = new HashMap<>();
             replacements.put("user", checkUser.getTenUser());

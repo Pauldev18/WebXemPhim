@@ -49,11 +49,11 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public ResponseEntity<Object> register(String tenUser, MultipartFile avatar, String sdt, int gioiTinh, Date ngaySinh, String taiKhoan, String matKhau, String gmail) {
+    public ResponseEntity<Object> register(String tenUser, String sdt, int gioiTinh, Date ngaySinh, String taiKhoan, String matKhau, String gmail) {
        try {
            Users newUser = new Users();
            newUser.setTenUser(tenUser);
-           newUser.setAvatar(cloudinaryService.uploadImage(avatar));
+           newUser.setAvatar(null);
            newUser.setSdt(sdt);
            newUser.setGioiTinh(gioiTinh);
            newUser.setNgaySinh(ngaySinh);
@@ -70,7 +70,7 @@ public class AccountServiceImpl implements AccountService {
 
            return new ResponseEntity<>(newUser, HttpStatus.OK);
 
-       }catch(IOException e){
+       }catch(Exception e){
            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
        }
     }

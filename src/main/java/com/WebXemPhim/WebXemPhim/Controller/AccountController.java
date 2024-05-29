@@ -6,6 +6,7 @@ import com.WebXemPhim.WebXemPhim.DTO.TTKhachHangDTO;
 import com.WebXemPhim.WebXemPhim.Entity.Users;
 import com.WebXemPhim.WebXemPhim.Service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,15 +35,14 @@ public class AccountController {
     @PostMapping("/createAcoount")
     public ResponseEntity<Object> register(
             @RequestParam("tenUser") String tenUser,
-            @RequestParam("avatar") MultipartFile avatar,
             @RequestParam("sdt") String sdt,
             @RequestParam("gioiTinh") int gioiTinh,
-            @RequestParam("ngaySinh") Date ngaySinh,
+            @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam("ngaySinh") Date ngaySinh,
             @RequestParam("taiKhoan") String taiKhoan,
             @RequestParam("matKhau") String matKhau,
             @RequestParam("gmail") String gmail
     ){
-        return accountService.register(tenUser, avatar, sdt, gioiTinh, ngaySinh, taiKhoan, matKhau, gmail);
+        return accountService.register(tenUser, sdt, gioiTinh, ngaySinh, taiKhoan, matKhau, gmail);
     }
     @PutMapping("/updateAccount/{IDUser}")
     public ResponseEntity<Object> updateUser(@RequestParam(value = "tenUser", required = false) String tenUser,
