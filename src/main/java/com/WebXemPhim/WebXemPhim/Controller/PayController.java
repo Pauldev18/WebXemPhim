@@ -168,9 +168,8 @@ public class PayController {
             thongTinVe.setNgayChieu(datVe.getNgayChieu().getNgayChieu());
             thongTinVe.setMaVe(newMaVe.getMaSoVe());
             thongTinVe.setNgayMua(currentDate);
-            redirectAttributes.addFlashAttribute("thongTinVe", thongTinVe);
-            // Redirect to the success page
-            return new RedirectView("https://your-domain.com/your-path");
+            redirectAttributes.addAttribute("transactionId", amount);
+            return new RedirectView("appdatvexemphim://success");
 
         } else {
             return new RedirectView(VNPayConfig.urlFail);
